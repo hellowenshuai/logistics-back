@@ -66,35 +66,35 @@ public class CargoReceiptServiceImpl implements ICargoReceiptService {
             int endStation = regionDao.findByCity(dealGoodsStation).getId();
             /**获取起始地到目的地直接的城市信息*/ // 这个线路是唯一的
             List<RouteInfo> routeList = routeInfoDao.findByStartStationAndEndStation(startStation, endStation);
-
+            /**获取所有中转城市的城市id*/
             String passStation = routeList.get(0).getPassStation();
-
-            for (int i = 1; i < routeList.size(); i++) {
-                //获取临时停车点
-                String temp = routeList.get(i).getPassStation();
-                //   TODO 这一句不太懂个
-                passStation = (temp.length() < passStation.length() ? temp : passStation);
-            }
-            String[] pass_station = passStation.split(",");
-
-            //通过运输单id寻找 接货单id  TODO 无用
-            String goodsBillCode = cargoReceiptDetailDao.findByGoodsRevertBillId(cargoReceipt.getGoodsRevertBillCode()).getGoodsBillDetailId();
-            //通过接货单id获取 接货单详情
-            GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
-            //中转费用是1.3倍 *距离
-            double transfer_fee = 1.3 * pass_station.length;
-            goodsBill.setTransferFee(transfer_fee);
             String result = "";
-
-            for (int i = 0; i < pass_station.length; i++) {
-                //获取中转站城市
-                String station_name = regionDao.findById(Integer.valueOf(pass_station[i])).getCity();
-                result += (i==0 ? "" : ",");
-                result += station_name;
+            if (null!=passStation && !"".equals(passStation)) {
+                for (int i = 1; i < routeList.size(); i++) {
+                    //获取临时停车点
+                    String temp = routeList.get(i).getPassStation();
+                    //   TODO 这一句不太懂个
+                    passStation = (temp.length() < passStation.length() ? temp : passStation);
+                }
+                String[] pass_station = passStation.split(",");
+                //通过运输单id寻找 接货单id  TODO 无用
+                String goodsBillCode = cargoReceiptDetailDao.findByGoodsRevertBillId(cargoReceipt.getGoodsRevertBillCode()).getGoodsBillDetailId();
+                //通过接货单id获取 接货单详情
+                GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
+                //中转费用是1.3倍 *距离
+                double transfer_fee = 1.3 * pass_station.length;
+                goodsBill.setTransferFee(transfer_fee);
+                for (int i = 0; i < pass_station.length; i++) {
+                    //获取中转站城市
+                    String station_name = regionDao.findById(Integer.valueOf(pass_station[i])).getCity();
+                    result += (i==0 ? "" : ",");
+                    result += station_name;
+                }
+                goodsBill.setTransferStation(result);
+                // 重新保存接货单
+                goodsBillDao.save(goodsBill);
             }
-            goodsBill.setTransferStation(result);
-            // 重新保存接货单
-            goodsBillDao.save(goodsBill);
+
             // 保存单据明细表
             BillInfo billInfo = new BillInfo();
             billInfo.setBillType("货运回执单");
