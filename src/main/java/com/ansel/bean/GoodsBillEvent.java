@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -15,6 +16,11 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Ansel
  *
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity(name = "goodsbillevent")
 public class GoodsBillEvent {
 
@@ -32,54 +38,5 @@ public class GoodsBillEvent {
 
 	private Date occurTime;
 
-	public GoodsBillEvent() {
-		super();
-	}
-
-	public GoodsBillEvent(String goodsBillId, String eventName, String remark, Date occurTime) {
-		super();
-		this.goodsBillId = goodsBillId;
-		this.eventName = eventName;
-		this.remark = remark;
-		this.occurTime = occurTime;
-	}
-
-	public String getGoodsBillId() {
-		return goodsBillId;
-	}
-
-	public void setGoodsBillId(String goodsBillId) {
-		this.goodsBillId = goodsBillId;
-	}
-
-	public String getEventName() {
-		return eventName;
-	}
-
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public Date getOccurTime() {
-		return occurTime;
-	}
-
-	public void setOccurTime(Date occurTime) {
-		this.occurTime = occurTime;
-	}
-
-	@Override
-	public String toString() {
-		return "BillEvent [goodsBillId=" + goodsBillId + ", eventName=" + eventName + ", remark=" + remark
-				+ ", occurTime=" + occurTime + "]";
-	}
 
 }

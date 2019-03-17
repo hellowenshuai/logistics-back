@@ -1,5 +1,7 @@
 package com.ansel.bean;
 
+import lombok.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,11 @@ import javax.persistence.Id;
  * @author Ansel
  *
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity(name = "cityexpand")
 public class CityExpand {
 	
@@ -23,44 +30,5 @@ public class CityExpand {
 	@Column(length = 50)
 	private String rangeCity;
 
-	public CityExpand() {
-
-	}
-
-	public CityExpand(int id, int cityId, String rangeCity) {
-		super();
-		this.id = id;
-		this.cityId = cityId;
-		this.rangeCity = rangeCity;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getCityId() {
-		return cityId;
-	}
-
-	public void setCityId(int cityId) {
-		this.cityId = cityId;
-	}
-
-	public String getRangeCity() {
-		return rangeCity;
-	}
-
-	public void setRangeCity(String rangeCity) {
-		this.rangeCity = rangeCity;
-	}
-
-	@Override
-	public String toString() {
-		return "CityExpand [id=" + id + ", cityId=" + cityId + ", rangeCity=" + rangeCity + "]";
-	}
 
 }

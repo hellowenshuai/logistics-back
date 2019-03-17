@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -14,6 +15,11 @@ import org.hibernate.annotations.GenericGenerator;
  * @author lenovo
  *
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "customeramount")
 public class CustomerAmount {
@@ -31,58 +37,5 @@ public class CustomerAmount {
 	
 	private int pieceAmountTotal;// 件数总计
 
-	public CustomerAmount() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public CustomerAmount( String sendGoodsCustomer, double carriageTotal, double insuranceTotal,
-			int pieceAmountTotal) {
-		super();
-		this.sendGoodsCustomer = sendGoodsCustomer;
-		this.carriageTotal = carriageTotal;
-		this.insuranceTotal = insuranceTotal;
-		this.pieceAmountTotal = pieceAmountTotal;
-	}
-
-	
-
-	public String getSendGoodsCustomer() {
-		return sendGoodsCustomer;
-	}
-
-	public void setSendGoodsCustomer(String sendGoodsCustomer) {
-		this.sendGoodsCustomer = sendGoodsCustomer;
-	}
-
-	public double getCarriageTotal() {
-		return carriageTotal;
-	}
-
-	public void setCarriageTotal(double carriageTotal) {
-		this.carriageTotal = carriageTotal;
-	}
-
-	public double getInsuranceTotal() {
-		return insuranceTotal;
-	}
-
-	public void setInsuranceTotal(double insuranceTotal) {
-		this.insuranceTotal = insuranceTotal;
-	}
-
-	public int getPieceAmountTotal() {
-		return pieceAmountTotal;
-	}
-
-	public void setPieceAmountTotal(int pieceAmountTotal) {
-		this.pieceAmountTotal = pieceAmountTotal;
-	}
-
-	@Override
-	public String toString() {
-		return "CustomerAmount [sendGoodsCustomer=" + sendGoodsCustomer + ", carriageTotal="
-				+ carriageTotal + ", insuranceTotal=" + insuranceTotal + ", pieceAmountTotal=" + pieceAmountTotal + "]";
-	}
 
 }

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -14,6 +15,11 @@ import org.hibernate.annotations.GenericGenerator;
  * @author lenovo
  *
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "driveramount")
 public class DriverAmount {
@@ -30,58 +36,6 @@ public class DriverAmount {
 	
 	private double total;// 总计
 
-	public DriverAmount() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public DriverAmount(int id, String driverCode, double carryFeeTotal, double addCarriageTotal, double total) {
-		super();
-		this.driverCode = driverCode;
-		this.carryFeeTotal = carryFeeTotal;
-		this.addCarriageTotal = addCarriageTotal;
-		this.total = total;
-	}
-
-	
-
-	public String getDriverCode() {
-		return driverCode;
-	}
-
-	public void setDriverCode(String driverCode) {
-		this.driverCode = driverCode;
-	}
-
-	public double getCarryFeeTotal() {
-		return carryFeeTotal;
-	}
-
-	public void setCarryFeeTotal(double carryFeeTotal) {
-		this.carryFeeTotal = carryFeeTotal;
-	}
-
-	public double getAddCarriageTotal() {
-		return addCarriageTotal;
-	}
-
-	public void setAddCarriageTotal(double addCarriageTotal) {
-		this.addCarriageTotal = addCarriageTotal;
-	}
-
-	public double getTotal() {
-		return total;
-	}
-
-	public void setTotal(double total) {
-		this.total = total;
-	}
-
-	@Override
-	public String toString() {
-		return "DriverAmount [ driverName=" + driverCode + ", carryFeeTotal=" + carryFeeTotal
-				+ ", addCarriageTotal=" + addCarriageTotal + ", total=" + total + "]";
-	}
 
 	
 

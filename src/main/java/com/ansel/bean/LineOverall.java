@@ -1,5 +1,7 @@
 package com.ansel.bean;
 
+import lombok.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,11 @@ import javax.persistence.Table;
  * @author lenovo
  *
  */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "lineoverall")
 public class LineOverall {
@@ -33,76 +40,5 @@ public class LineOverall {
 
 	private int times;// 次数
 
-	public LineOverall() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public LineOverall(int id, String loadStation, String dealGoodsStation, double allCarriageTotal,
-			double insuranceTotal, int times) {
-		super();
-		this.id = id;
-		this.loadStation = loadStation;
-		this.dealGoodsStation = dealGoodsStation;
-		this.allCarriageTotal = allCarriageTotal;
-		this.insuranceTotal = insuranceTotal;
-		this.times = times;
-	}
-
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getLoadStation() {
-		return loadStation;
-	}
-
-	public void setLoadStation(String loadStation) {
-		this.loadStation = loadStation;
-	}
-
-	public String getDealGoodsStation() {
-		return dealGoodsStation;
-	}
-
-	public void setDealGoodsStation(String dealGoodsStation) {
-		this.dealGoodsStation = dealGoodsStation;
-	}
-
-	public double getAllCarriageTotal() {
-		return allCarriageTotal;
-	}
-
-	public void setAllCarriageTotal(double allCarriageTotal) {
-		this.allCarriageTotal = allCarriageTotal;
-	}
-
-	public double getInsuranceTotal() {
-		return insuranceTotal;
-	}
-
-	public void setInsuranceTotal(double insuranceTotal) {
-		this.insuranceTotal = insuranceTotal;
-	}
-
-	public int getTimes() {
-		return times;
-	}
-
-	public void setTimes(int times) {
-		this.times = times;
-	}
-
-	@Override
-	public String toString() {
-		return "LineOverall [id=" + id + ", loadStation=" + loadStation + ", dealGoodsStation=" + dealGoodsStation
-				+ ", allCarriageTotal=" + allCarriageTotal + ", insuranceTotal=" + insuranceTotal + ", times=" + times
-				+ "]";
-	}
 
 }
