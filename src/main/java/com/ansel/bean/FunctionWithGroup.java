@@ -9,10 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 4.34 功能与组表
- * 
- * @author lenovo
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.34 功能与组表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

@@ -9,10 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 4.36 职员用户关系�?
- * 
- * @author lenovo
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.36 职员用户关系�?
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

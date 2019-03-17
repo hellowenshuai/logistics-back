@@ -10,10 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 4.38 打印专线整体
- * 
- * @author lenovo
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.38 打印专线整体
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

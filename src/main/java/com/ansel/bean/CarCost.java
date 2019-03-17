@@ -11,10 +11,10 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 4.42 打印车辆成本
- * 
- * @author lenovo
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.42 打印车辆成本
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

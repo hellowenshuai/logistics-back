@@ -14,6 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+/**
+ * @author chenshuai
+ * @version 1.0
+ * @description 单据
+ * @date 2019/3/17 0017 16:31
+ */
 @CrossOrigin
 @RequestMapping(value = "/bill")
 @ControllerAdvice

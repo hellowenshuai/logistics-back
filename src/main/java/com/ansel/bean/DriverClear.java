@@ -11,10 +11,10 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * 4.12 司机结算主表
- * 
- * @author Ansel
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.12 司机结算主表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

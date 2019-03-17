@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 /**
  * 4.13 客户运单结算表
  * 
- * @author Ansel
+ * @author Chenss
  *
  */
 

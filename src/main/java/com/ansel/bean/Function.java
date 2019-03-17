@@ -9,10 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * 4.31 功能�?
- * 
- * @author lenovo
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.31 功能表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

@@ -25,6 +25,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/**
+ * @author chenshuai
+ * @version 1.0
+ * @description 中转
+ * @date 2019/3/17 0017 16:31
+ */
 @CrossOrigin
 @RequestMapping(value = "/transfer")
 @ControllerAdvice

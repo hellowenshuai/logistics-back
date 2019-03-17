@@ -9,9 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * 4.29 城市扩充表
- * @author Ansel
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.29 城市扩充表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

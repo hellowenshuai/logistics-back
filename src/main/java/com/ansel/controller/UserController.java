@@ -16,6 +16,12 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
 
+/**
+ * @author chenshuai
+ * @version 1.0
+ * @description 用户
+ * @date 2019/3/17 0017 16:31
+ */
 @CrossOrigin
 @RestController
 @Api(value = "用户Controller")

@@ -6,9 +6,10 @@ import javax.persistence.*;
 import java.sql.Date;
 
 /**
- * 4.8 货物回执信息表
- *
- * @author Ansel
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.8 货物回执信息表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

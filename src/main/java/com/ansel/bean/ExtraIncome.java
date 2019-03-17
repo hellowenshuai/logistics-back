@@ -11,10 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * 4.20 营业外收入表
- * 
- * @author Ansel
- *
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.20 营业外收入表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

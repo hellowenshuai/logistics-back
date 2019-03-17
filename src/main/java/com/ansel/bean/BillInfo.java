@@ -7,9 +7,10 @@ import java.util.Date;
 
 
 /**
- * 4.2 单据明细表
- *
- * @author Ansel
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.2 单据明细表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

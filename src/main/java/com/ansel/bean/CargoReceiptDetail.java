@@ -9,9 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * 4.5 货运回执单详表
- *
- * @author Ansel
+ * @author chenshuai
+ * @version 1.0
+ * @description 4.5 货运回执单详表
+ * @date 2019/3/17 0017 16:09
  */
 @Getter
 @Setter

@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * @author Administrator
+ * @author chenshuai
+ * @version 1.0
+ * @description 营业外收入
+ * @date 2019/3/17 0017 16:31
  */
 @RestController
 @CrossOrigin
