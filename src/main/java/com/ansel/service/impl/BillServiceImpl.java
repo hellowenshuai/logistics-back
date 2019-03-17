@@ -65,7 +65,7 @@ public class BillServiceImpl implements IBillService {
 
     /**
      * @return boolean
-     * @description 分发 - 添加一条单据分发信息
+     * @description 分发 - 将一个单子分配给某个司机
      * @params [billRelease]
      * @creator chenshuai
      * @date 2019/3/12 0012
@@ -73,16 +73,16 @@ public class BillServiceImpl implements IBillService {
     @Override
     public boolean addRelease(BillRelease billRelease) {
         billRelease.setBillType("货运单");
-        //获取货运单的单号
+        /**获取货运单的单号*/
         String billCode = billRelease.getBillCode();
         try {
-            /** 保持在已分派的货运单中*/
+            /** 1.保持在已分派的货运单中*/
             billReleaseDao.save(billRelease);
-            //修改货运单状态
+            /** 2.改货运单事件状态*/
             goodsBillEventDao.updateEventName("未到", new Date(), billCode);
             //获取到运输单 单号
             String goodsRevertBillId = cargoReceiptDetailDao.findByGoodsBillDetailId(billCode).getGoodsRevertBillId();
-            //修改运输单状态
+            /** 3.修改运输单状态*/
             cargoReceiptDao.updateRelease(billRelease.getReceiveBillTime(), billRelease.getReceiveBillPerson(), "未到车辆", goodsRevertBillId);
             return true;
         } catch (Exception e) {

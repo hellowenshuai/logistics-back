@@ -10,7 +10,7 @@ import javax.persistence.Id;
 /**
  * @author chenshuai
  * @version 1.0
- * @description 4.45 损益月报临时�?
+ * @description 4.45 损益月报临时统计表
  * @date 2019/3/17 0017 16:09
  */
 @Getter

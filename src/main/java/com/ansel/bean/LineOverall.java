@@ -34,9 +34,9 @@ public class LineOverall {
 	@Column(length = 50)
 	private String dealGoodsStation;// 交货地点
 
-	private double allCarriageTotal;// 总运费�?�计
+	private double allCarriageTotal;// 总运费合计
 
-	private double insuranceTotal;// 保险费�?�计
+	private double insuranceTotal;// 保险费合计
 
 	private int times;// 次数
 

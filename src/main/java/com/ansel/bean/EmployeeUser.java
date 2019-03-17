@@ -11,7 +11,7 @@ import javax.persistence.Table;
 /**
  * @author chenshuai
  * @version 1.0
- * @description 4.36 职员用户关系�?
+ * @description 4.36 职员用户关系表
  * @date 2019/3/17 0017 16:09
  */
 @Getter

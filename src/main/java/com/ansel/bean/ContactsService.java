@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 /**
  * @author chenshuai
  * @version 1.0
- * @description 4.43 打印�?来业�?
+ * @description 4.43 打印往来业务表
  * @date 2019/3/17 0017 16:09
  */
 @Getter

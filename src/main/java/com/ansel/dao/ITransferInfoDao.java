@@ -1,15 +1,14 @@
 package com.ansel.dao;
 
-import java.util.List;
-
+import com.ansel.bean.TransferInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ansel.bean.TransferInfo;
+import java.util.List;
 
 public interface ITransferInfoDao extends JpaRepository<TransferInfo, Long> {
 
-	public TransferInfo findByGoodsBillCodeAndTransferStation(String goodsBillCode, String transferStation);
-	
-	public List<TransferInfo> findByGoodsBillCode(String goodsBillCode);
-	
+    public TransferInfo findByGoodsBillCodeOrTransferStationContaining(String goodsBillCode, String transferStation);
+
+    public List<TransferInfo> findByGoodsBillCode(String goodsBillCode);
+
 }

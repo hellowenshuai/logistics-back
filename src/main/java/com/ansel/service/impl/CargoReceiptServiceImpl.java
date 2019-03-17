@@ -153,8 +153,18 @@ public class CargoReceiptServiceImpl implements ICargoReceiptService {
         }
     }
 
+    /**
+     * @return boolean
+     * @description 发货操作，
+     * 1.修改运输单状态为 “未到车辆”
+     * 2.修改货运单事件状态为 “未到”
+     * @params [cargoReceipt]
+     * @creator chenshuai
+     * @date 2019/3/17 0017
+     */
     @Override
     public boolean submit(CargoReceipt cargoReceipt) {
+
         try {
             //更新运输单
             cargoReceipt.setBackBillState("未到车辆");

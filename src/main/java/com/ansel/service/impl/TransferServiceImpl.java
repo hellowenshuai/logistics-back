@@ -56,7 +56,7 @@ public class TransferServiceImpl implements ITransferService {
         //判断中转情况
         for (GoodsBill goodsBill : list) {
             String[] citys = goodsBill.getTransferStation().split(",");
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStation(goodsBill.getGoodsBillCode(), citys[citys.length - 1])==null) {
+            if (transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBill.getGoodsBillCode(), citys[citys.length - 1])==null) {
                 result.add(goodsBill);
             }
         }
@@ -69,7 +69,7 @@ public class TransferServiceImpl implements ITransferService {
         String[] citys = goodsBill.getTransferStation().split(",");
         TransferComInfo transferComInfo = new TransferComInfo();
         for (String string : citys) {
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStation(goodsBillCode, string)==null) {
+            if (transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBillCode, string)==null) {
                 transferComInfo = transferComInfoDao.findByCity(string);
                 break;
             }
@@ -95,10 +95,15 @@ public class TransferServiceImpl implements ITransferService {
         List<GoodsBill> list = goodsBillDao.transferState(type, driverId);
         List<GoodsBill> result = new LinkedList<>();
         //判断中转情况
-        for (GoodsBill goodsBill : list) {
-            String[] citys = goodsBill.getTransferStation().split(",");
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStation(goodsBill.getGoodsBillCode(), citys[citys.length - 1])!=null) {
-                result.add(goodsBill);
+        for (int i = 0; i < list.size(); i++) {
+            String[] citys = list.get(i).getTransferStation().split("，");
+            String transferStation = "%"+citys[citys.length - 1]+"%";
+            String goodsBillCode = list.get(i).getGoodsBillCode();
+            System.out.println(transferStation);
+            TransferInfo byGoodsBillCodeAndTransferStationContaining = transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBillCode,transferStation);
+            System.out.println(byGoodsBillCodeAndTransferStationContaining);
+            if (transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBillCode, transferStation)!=null) {
+                result.add(list.get(i));
             }
         }
         return result;
