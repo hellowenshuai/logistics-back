@@ -3,6 +3,8 @@ package com.ansel.service.impl;
 import com.ansel.bean.*;
 import com.ansel.dao.*;
 import com.ansel.service.IClearService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 @Service(value = "clearService")
 public class ClearServiceImpl implements IClearService {
+    private static final Logger log = LoggerFactory.getLogger(ClearServiceImpl.class);
+
     // 货运回执单主表
     @Autowired
     private ICargoReceiptDao cargoReceiptDao;
@@ -42,9 +46,15 @@ public class ClearServiceImpl implements IClearService {
     @Autowired
     private IExtraClearDao extraClearDao;
 
+    /**
+     * @return java.util.List<com.ansel.bean.DriverClear>
+     * @description 司机结算-返回未结的所有实体(实体中能填的属性都填好)
+     * @params [eventName]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<DriverClear> selectDrclear(String eventName) {
-
         List<DriverClear> driverCleareds = new ArrayList(); // 已结
         List<DriverClear> driverUnClears = new ArrayList(); // 未结
 
@@ -80,6 +90,13 @@ public class ClearServiceImpl implements IClearService {
 
     }
 
+    /**
+     * @return com.ansel.bean.DriverClear
+     * @description 司机结算-通过订单编号查询单个实体的已填所有信息
+     * @params [cargoReceiptCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public DriverClear selectByCargoReceiptCode(String cargoReceiptCode) {
         return driverClearDao.findByBackBillCode(cargoReceiptCode);
@@ -102,11 +119,9 @@ public class ClearServiceImpl implements IClearService {
                     .getAllCarriage();
 
             double balance = carryFee + bindInsurance + addCarriage - driverClear.getPayedMoney(); // 余额
-
             driverClear.setBalance(balance);
-
             double money = allCarriage + bindInsurance + addCarriage;
-            System.out.println("输入的是：" + driverClear.getPayedMoney());
+            log.info("输入的是：" + driverClear.getPayedMoney());
             if (money!=driverClear.getPayedMoney()) {
                 driverClearDao.save(driverClear);
             } else {
@@ -115,7 +130,7 @@ public class ClearServiceImpl implements IClearService {
             }
             return true;
         } catch (Exception e) {
-            System.err.println("司机结算 插入失败！");
+            log.error("司机结算 插入失败！" + e.getMessage());
             return false;
         }
     }
@@ -167,6 +182,13 @@ public class ClearServiceImpl implements IClearService {
         }
     }
 
+    /**
+     * @return com.ansel.bean.CustomerBillClear
+     * @description 客户结算-通过订单编号查询单个实体的已填所有信息
+     * @params [goodsBillCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public CustomerBillClear selectByBillCode(String goodsBillCode) {
         return customerBillClearDao.findByGoodsBillCode(goodsBillCode);
@@ -181,8 +203,7 @@ public class ClearServiceImpl implements IClearService {
      */
     @Override
     public boolean cusClear(CustomerBillClear customerBillClear) {
-
-        System.out.println(customerBillClear);
+        log.info("customerBillClear:" + customerBillClear.toString());
         try {
             double billMoney = customerBillClear.getBillMoney(); // 本单
             double insurance = customerBillClear.getInsurance(); // 保险费
@@ -211,6 +232,13 @@ public class ClearServiceImpl implements IClearService {
         }
     }
 
+    /**
+     * @return java.util.List<com.ansel.bean.ProxyFeeClear>
+     * @description 代收结算-返回未结的所有实体(实体中能填的属性都填好)
+     * @params [eventName]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<ProxyFeeClear> selectHelpclear(String eventName) {
         List<ProxyFeeClear> proxyFeeCleareds = new ArrayList(); // 已结
@@ -259,6 +287,13 @@ public class ClearServiceImpl implements IClearService {
         }
     }
 
+    /**
+     * @return com.ansel.bean.ProxyFeeClear
+     * @description 代收结算-通过订单编号查询单个实体的已填所有信息
+     * @params [goodsBillCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public ProxyFeeClear selectByGoodsBillCode(String goodsBillCode) {
         return proxyFeeClearDao.findByGoodsBillCode(goodsBillCode);
@@ -266,6 +301,13 @@ public class ClearServiceImpl implements IClearService {
 
     @Override
     public boolean helpClear(ProxyFeeClear proxyFeeClear) {
+        /**
+         *@description 代收结算（前台返回一个完整的实体）
+         *@params [proxyFeeClear]
+         *@return boolean
+         *@creator chenshuai
+         *@date 2019/3/20 0020
+         */
         try {
             double factReceiveFund = proxyFeeClear.getFactReceiveFund(); // 实收
             double commisionRate = proxyFeeClear.getCommisionRate(); // 佣金率
@@ -284,23 +326,36 @@ public class ClearServiceImpl implements IClearService {
             }
             return true;
         } catch (Exception e) {
-            // TODO: handle exception
-            System.err.println("代收结算 插入失败！");
+            log.error("代收结算 插入失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return boolean
+     * @description 杂费结算  add
+     * @params [extraClear]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean saveExtraClear(ExtraClear extraClear) {
         try {
             extraClearDao.save(extraClear);
             return true;
         } catch (Exception e) {
-            System.err.println("杂费结算 插入失败！");
+            log.error("杂费结算 插入失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.ExtraClear>
+     * @description 杂费结算  select
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Page<ExtraClear> selectAllExtraClearByPage(Pageable pageable) {
         return extraClearDao.findAll(pageable);

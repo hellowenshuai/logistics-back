@@ -4,12 +4,12 @@ import com.ansel.bean.*;
 import com.ansel.service.ICheckService;
 import com.ansel.util.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author chenshuai
@@ -20,7 +20,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @CrossOrigin
 @Api(value = "营业外收入 Controller")
-@ApiIgnore
+//@ApiIgnore
 @ControllerAdvice
 @RequestMapping(value = "/check")
 public class CheckController extends ReturnType {
@@ -31,6 +31,7 @@ public class CheckController extends ReturnType {
     /**
      * 录入营业外收入
      */
+    @ApiOperation(value = "录入营业外收入")
     @RequestMapping(value = "/addExtraIncome", method = RequestMethod.POST, produces = "application/json")
     public String add(ExtraIncome extraIncome) {
         boolean flag = false;
@@ -44,6 +45,7 @@ public class CheckController extends ReturnType {
     /**
      * 查询所有营业外收入
      */
+    @ApiOperation(value = "查询所有营业外收入")
     @RequestMapping(value = "/selectExtraIncome", method = RequestMethod.GET)
     public Result selectAllExtra(@RequestParam("pageNum") int pageNum, @RequestParam("limit") int limit) {
         Pageable pageable = PageRequest.of(pageNum - 1, limit);
@@ -55,6 +57,7 @@ public class CheckController extends ReturnType {
     /**
      * 录入财务费用
      */
+    @ApiOperation(value = "录入财务费用")
     @RequestMapping(value = "/addFinanceFee", method = RequestMethod.POST, produces = "application/json")
     public String add(FinanceFee financeFee) {
         boolean flag = false;
@@ -68,6 +71,7 @@ public class CheckController extends ReturnType {
     /**
      * 查询所有财务费用
      */
+    @ApiOperation(value = "查询所有财务费用")
     @RequestMapping(value = "/selectFinanceFee", method = RequestMethod.GET)
     public Result selectAllFinance(@RequestParam("pageNum") int pageNum, @RequestParam("limit") int limit) {
         Pageable pageable = PageRequest.of(pageNum - 1, limit);
@@ -79,6 +83,7 @@ public class CheckController extends ReturnType {
     /**
      * 录入管理费用
      */
+    @ApiOperation(value = "录入管理费用")
     @RequestMapping(value = "/addManageFee", method = RequestMethod.POST, produces = "application/json")
     public String add(ManageFee manageFee) {
         boolean flag = false;
@@ -92,6 +97,7 @@ public class CheckController extends ReturnType {
     /**
      * 查询所有管理费用
      */
+    @ApiOperation(value = "查询所有管理费用")
     @RequestMapping(value = "/selectManageFee", method = RequestMethod.GET)
     public Result selectAllManageFee(@RequestParam("pageNum") int pageNum, @RequestParam("limit") int limit) {
         Pageable pageable = PageRequest.of(pageNum - 1, limit);
@@ -103,6 +109,7 @@ public class CheckController extends ReturnType {
     /**
      * 根据id查询管理费用
      */
+    @ApiOperation(value = "根据id查询管理费用")
     @RequestMapping(value = "/findManageFee/{id}", method = RequestMethod.GET)
     public ManageFee selectByMId(@PathVariable("id") int id) {
         ManageFee manageFee = checkService.selectByMId(id);
@@ -112,6 +119,7 @@ public class CheckController extends ReturnType {
     /**
      * 录入员工工资
      */
+    @ApiOperation(value = "录入员工工资")
     @RequestMapping(value = "/addWage", method = RequestMethod.POST, produces = "application/json")
     public String add(EmployeeWage wage) {
         boolean flag = false;
@@ -125,6 +133,7 @@ public class CheckController extends ReturnType {
     /**
      * 查询所有员工工资
      */
+    @ApiOperation(value = "查询所有员工工资")
     @RequestMapping(value = "/selectWage", method = RequestMethod.GET)
     public Result selectAllWage(@RequestParam("pageNum") int pageNum, @RequestParam("limit") int limit) {
         Pageable pageable = PageRequest.of(pageNum - 1, limit);
@@ -136,6 +145,7 @@ public class CheckController extends ReturnType {
     /**
      * 根据员工编号查询员工工资
      */
+    @ApiOperation(value = "根据员工编号查询员工工资")
     @RequestMapping(value = "/findWage/{employeeCode}", method = RequestMethod.GET)
     public EmployeeWage selectByEmployeeCode(@PathVariable("employeeCode") String employeeCode) {
         EmployeeWage wage = checkService.selectByEmployeeCode(employeeCode);
@@ -145,6 +155,7 @@ public class CheckController extends ReturnType {
     /**
      * 查询当前月报
      */
+    @ApiOperation(value = "查询当前月报")
     @RequestMapping(value = "/selectIncomeMonthly", method = RequestMethod.GET)
     public IncomeMonthlyTemp selectAll() {
         IncomeMonthlyTemp incomeMonthlyTemp = checkService.selectAll();

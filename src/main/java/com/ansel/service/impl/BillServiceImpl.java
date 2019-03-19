@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 /**
- * @author Administrator
+ * @author chenshuai
  */
 @Service(value = "billService")
 @Transactional(rollbackFor = Exception.class)
@@ -45,6 +45,13 @@ public class BillServiceImpl implements IBillService {
     @Autowired
     private IGoodsReceiptInfoDao goodsReceiptInfoDao;
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.BillInfo>
+     * @description 分页查看所有货运单
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/19 0019
+     */
     @Override
     public Page<BillInfo> findAllByPage(Pageable pageable) {
         return billInfoDao.findAll(pageable);
@@ -86,8 +93,7 @@ public class BillServiceImpl implements IBillService {
             cargoReceiptDao.updateRelease(billRelease.getReceiveBillTime(), billRelease.getReceiveBillPerson(), "未到车辆", goodsRevertBillId);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            log.info("单据明细表插入失败 | 货运单 & 货运回执信息 更新失败");
+            log.error("单据明细表插入失败 | 货运单 & 货运回执信息 更新失败" + e.getMessage());
             return false;
 
         }
@@ -116,8 +122,7 @@ public class BillServiceImpl implements IBillService {
             cargoReceiptDao.updateArriveTime(goodsReceiptInfo.getRceiveGoodsDate(), "未结合同", goodsRevertBillId);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("货物回执信息添加失败");
+            log.error("货物回执信息添加失败" + e.getMessage());
             return false;
         }
     }

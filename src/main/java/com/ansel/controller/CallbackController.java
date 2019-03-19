@@ -23,7 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @CrossOrigin
 @RestController
-@ApiIgnore
+//@ApiIgnore
 @ControllerAdvice
 @Api(value = "回告 controller")
 @RequestMapping(value = "/callback")
@@ -31,7 +31,8 @@ public class CallbackController extends ReturnType {
 	
 	@Autowired
 	private ICallbackService callbackService;
-	
+
+	@ApiOperation(value = "回告", notes = "回告 - 添加一条回告信息")
 	@RequestMapping(value = "/add/{goodsBillId}", method = RequestMethod.POST)
 	public String addInfo(@PathVariable("goodsBillId") String goodsBillId, CallbackInfo callbackInfo) {
 

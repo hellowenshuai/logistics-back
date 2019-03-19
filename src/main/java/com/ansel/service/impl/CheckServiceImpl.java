@@ -44,6 +44,13 @@ public class CheckServiceImpl implements ICheckService {
     @Autowired
     private IIncomeMonthlyTempDao iMonthlyTempDao;
 
+    /**
+     * @return boolean
+     * @description 录入营业外收入
+     * @params [extraIncome]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean save(ExtraIncome extraIncome) {
         try {
@@ -55,16 +62,37 @@ public class CheckServiceImpl implements ICheckService {
         }
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.ExtraIncome>
+     * @description 查询所有营业外收入
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Page<ExtraIncome> selectAllExtra(Pageable pageable) {
         return extraIncomeDao.findAll(pageable);
     }
 
+    /**
+     * @return java.util.List<com.ansel.bean.ExtraIncome>
+     * @description 非营业收入
+     * @params [incomeMonth]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<ExtraIncome> selectByIncomeMonth(String incomeMonth) {
         return extraIncomeDao.findByIncomeMonth(incomeMonth);
     }
 
+    /**
+     * @return java.util.List<com.ansel.bean.CargoReceipt>
+     * @description 运费、保险费（营业收入）
+     * @params [beginTime, endTime]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<CargoReceipt> selectBySignTime(String beginTime, String endTime) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -79,6 +107,13 @@ public class CheckServiceImpl implements ICheckService {
         return cargoReceiptDao.findBySignTime(date, date1);
     }
 
+    /**
+     * @return boolean
+     * @description 录入财务费用
+     * @params [financeFee]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean save(FinanceFee financeFee) {
         try {
@@ -90,16 +125,37 @@ public class CheckServiceImpl implements ICheckService {
         }
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.FinanceFee>
+     * @description 查询所有财务费用
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Page<FinanceFee> selectAllFinance(Pageable pageable) {
         return financeFeeDao.findAll(pageable);
     }
 
+    /**
+     * @return java.util.List<com.ansel.bean.FinanceFee>
+     * @description 财务费用
+     * @params [payoutMonth]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<FinanceFee> selectByFPayoutMonth(String payoutMonth) {
         return financeFeeDao.findByPayoutMonth(payoutMonth);
     }
 
+    /**
+     * @return boolean
+     * @description 录入管理费用
+     * @params [manageFee]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean save(ManageFee manageFee) {
         try {
@@ -111,21 +167,49 @@ public class CheckServiceImpl implements ICheckService {
         }
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.ManageFee>
+     * @description 查询所有管理费用
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Page<ManageFee> selectAllManage(Pageable pageable) {
         return manageFeeDao.findAll(pageable);
     }
 
+    /**
+     * @return java.util.List<com.ansel.bean.ManageFee>
+     * @description 管理费用
+     * @params [payoutMonth]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<ManageFee> selectByMPayoutMonth(String payoutMonth) {
         return manageFeeDao.findByPayoutMonth(payoutMonth);
     }
 
+    /**
+     * @return com.ansel.bean.ManageFee
+     * @description 根据id查询管理费用
+     * @params [id]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public ManageFee selectByMId(int id) {
         return manageFeeDao.findById(id);
     }
 
+    /**
+     * @return boolean
+     * @description 录入员工工资
+     * @params [employeeWage]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean save(EmployeeWage employeeWage) {
         try {
@@ -137,6 +221,13 @@ public class CheckServiceImpl implements ICheckService {
         }
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.EmployeeWage>
+     * @description 查询所有员工工资
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Page<EmployeeWage> selectAllWage(Pageable pageable) {
         return employeeWageDao.findAll(pageable);
@@ -151,7 +242,6 @@ public class CheckServiceImpl implements ICheckService {
      */
     @Override
     public List<EmployeeWage> selectByDate(String beginTime, String endTime) {
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date = null;
         java.util.Date date1 = null;
@@ -160,11 +250,17 @@ public class CheckServiceImpl implements ICheckService {
             date1 = sdf.parse(endTime);
         } catch (ParseException e) {
             log.info("日期转换失败" + e.getMessage());
-            e.printStackTrace();
         }
         return employeeWageDao.findByDate(date, date1);
     }
 
+    /**
+     * @return com.ansel.bean.EmployeeWage
+     * @description 根据员工编号查询员工工资
+     * @params [employeeCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public EmployeeWage selectByEmployeeCode(String employeeCode) {
         return employeeWageDao.findByEmployeeCode(employeeCode);
@@ -200,7 +296,6 @@ public class CheckServiceImpl implements ICheckService {
      */
     @Override
     public IncomeMonthlyTemp save() {
-
         log.info("保存月报开始");
         //初始化一个日历类
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+08:00"));
@@ -327,11 +422,25 @@ public class CheckServiceImpl implements ICheckService {
         }
     }
 
+    /**
+     * @return com.ansel.bean.IncomeMonthlyTemp
+     * @description 查询本月流水
+     * @params [month]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public IncomeMonthlyTemp selectByMonth(String month) {
         return iMonthlyTempDao.findByMonth(month);
     }
 
+    /**
+     * @return com.ansel.bean.IncomeMonthlyTemp
+     * @description 查询当前月报
+     * @params []
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public IncomeMonthlyTemp selectAll() {
         return save();

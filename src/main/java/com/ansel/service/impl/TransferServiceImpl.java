@@ -49,13 +49,22 @@ public class TransferServiceImpl implements ITransferService {
         return transferComInfoDao.findAll(pageable);
     }
 
+    /**
+     * @return java.util.List<com.ansel.bean.GoodsBill>
+     * @description 查询一个司机的所有运单(中转 | 到货)
+     * @params [type, driverId]
+     * @creator chenshuai
+     * @date 2019/3/19 0019
+     */
     @Override
     public List<GoodsBill> transferGoods(String type, String driverId) {
+        //
         List<GoodsBill> list = goodsBillDao.transferState(type, driverId);
         List<GoodsBill> result = new LinkedList<>();
         //判断中转情况
         for (GoodsBill goodsBill : list) {
             String[] citys = goodsBill.getTransferStation().split(",");
+            //？？
             if (transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBill.getGoodsBillCode(), citys[citys.length - 1])==null) {
                 result.add(goodsBill);
             }
@@ -97,10 +106,10 @@ public class TransferServiceImpl implements ITransferService {
         //判断中转情况
         for (int i = 0; i < list.size(); i++) {
             String[] citys = list.get(i).getTransferStation().split("，");
-            String transferStation = "%"+citys[citys.length - 1]+"%";
+            String transferStation = "%" + citys[citys.length - 1] + "%";
             String goodsBillCode = list.get(i).getGoodsBillCode();
             System.out.println(transferStation);
-            TransferInfo byGoodsBillCodeAndTransferStationContaining = transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBillCode,transferStation);
+            TransferInfo byGoodsBillCodeAndTransferStationContaining = transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBillCode, transferStation);
             System.out.println(byGoodsBillCodeAndTransferStationContaining);
             if (transferInfoDao.findByGoodsBillCodeOrTransferStationContaining(goodsBillCode, transferStation)!=null) {
                 result.add(list.get(i));
@@ -125,6 +134,13 @@ public class TransferServiceImpl implements ITransferService {
         return result;
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.TransferInfo>
+     * @description 查询所有的中转信息 货运单
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/19 0019
+     */
     @Override
     public Page<TransferInfo> findInfoByPage(Pageable pageable) {
         return transferInfoDao.findAll(pageable);

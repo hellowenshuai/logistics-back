@@ -23,7 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @CrossOrigin
 @RequestMapping(value = "/bill")
 @ControllerAdvice
-@ApiIgnore
+//@ApiIgnore
 @RestController
 @Api(value = "单据 controller")
 public class BillController extends ReturnType {

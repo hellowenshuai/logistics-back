@@ -23,7 +23,7 @@ import com.ansel.dao.IGoodsBillDao;
 import com.ansel.dao.IGoodsBillEventDao;
 import com.ansel.service.IGoodsBillService;
 
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service(value = "goodsBillService")
 public class GoodsBillServiceImpl implements IGoodsBillService {
 
@@ -41,7 +41,7 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
 	
 	@Override
 	public Map<?, ?> save(GoodsBill goodsBill) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>(16);
 		try {
 			String goodsBillCode = "HY";
 			while (true) {
