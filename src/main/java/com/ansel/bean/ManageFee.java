@@ -1,5 +1,6 @@
 package com.ansel.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
 import java.sql.Date;
@@ -32,6 +33,7 @@ public class ManageFee {
 	private double phoneFee;
 	private double otherPayout;
 	private String payoutMonth;
+	@JSONField(format="yyyy-MM-dd")
 	private Date writeDate;
 
 

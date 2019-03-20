@@ -1,13 +1,14 @@
 package com.ansel.bean;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-
-import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Date;
 
 /**
  * @author chenshuai
@@ -22,13 +23,14 @@ import javax.persistence.Id;
 @ToString
 @Entity(name = "financefee")
 public class FinanceFee {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private double fee;
-	private String payoutMonth;
-	private Date writeDate;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private double fee;
+    private String payoutMonth;
+    @JSONField(format="yyyy-MM-dd")
+    private Date writeDate;
 
 
 }
