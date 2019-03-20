@@ -7,9 +7,9 @@ package com.ansel.controller;
  * @date 2019/3/17 0017 16:31
  */
 public abstract class ReturnType {
-	
-	protected final static String SUCCESS = "SUCCESS";
-	
-	protected final static String ERROR = "ERROR"; 
+
+    protected final static String SUCCESS = "SUCCESS";
+
+    protected final static String ERROR = "ERROR";
 
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @Api(value = "营业外收入 Controller")
-//@ApiIgnore
 @ControllerAdvice
 @RequestMapping(value = "/check")
 public class CheckController extends ReturnType {

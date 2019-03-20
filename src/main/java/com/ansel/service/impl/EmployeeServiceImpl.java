@@ -9,13 +9,23 @@ import com.ansel.dao.IUserDao;
 import com.ansel.dao.IUserWithGroupDao;
 import com.ansel.service.IEmployeeService;
 import com.ansel.util.AddPeopleUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+/**
+ * @author chenshuai
+ */
+@Transactional(rollbackOn = Exception.class)
 @Service(value = "employeeService")
 public class EmployeeServiceImpl implements IEmployeeService {
+
+    private static final Logger log = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
     @Autowired
     private IGroupDao groupDao;
@@ -29,8 +39,16 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Autowired
     private IEmployeeDao employeeDao;
 
+    /**
+     * @return boolean
+     * @description 新增一个职员
+     * @params [employee, condition]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean save(Employee employee, int condition) {
+
         try {
             String department = employee.getDepartment();
             String employeeCode = "";
@@ -55,13 +73,21 @@ public class EmployeeServiceImpl implements IEmployeeService {
             employeeDao.save(employee);
             return true;
         } catch (Exception e) {
-            System.err.println("职员 | 用户 | 用户组关系表 信息插入失败！");
+            log.error("职员 | 用户 | 用户组关系表 信息插入失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return boolean
+     * @description 删除一个职员
+     * @params [employeeCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean delete(String employeeCode) {
+
         try {
             Employee employee = new Employee();
             employee.setEmployeeCode(employeeCode);
@@ -74,13 +100,21 @@ public class EmployeeServiceImpl implements IEmployeeService {
             }
             return true;
         } catch (Exception e) {
-            System.err.println("职员信息删除失败！");
+            log.error("职员信息删除失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return boolean
+     * @description 修改一个职员
+     * @params [employee, employeeCode, condition]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean update(Employee employee, String employeeCode, int condition) {
+
         Employee emp = employeeDao.findByEmployeeCode(employeeCode);
         try {
             if (!emp.getDepartment().equals(employee.getDepartment())) {
@@ -115,16 +149,30 @@ public class EmployeeServiceImpl implements IEmployeeService {
             }
             return true;
         } catch (Exception e) {
-            System.err.println("职员 | 用户 | 用户组关系表 信息更新失败！");
+            log.error("职员 | 用户 | 用户组关系表 信息更新失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.Employee>
+     * @description 查看所有职员
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Page<Employee> selectAllEmpByPage(Pageable pageable) {
         return employeeDao.findAll(pageable);
     }
 
+    /**
+     * @return com.ansel.bean.Employee
+     * @description 查看所有职员的编号
+     * @params [employeeCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Employee selectByEmployeeCode(String employeeCode) {
         return employeeDao.findByEmployeeCode(employeeCode);

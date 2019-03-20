@@ -9,6 +9,8 @@ import com.ansel.dao.IUserDao;
 import com.ansel.dao.IUserWithGroupDao;
 import com.ansel.service.IDriverInfoService;
 import com.ansel.util.AddPeopleUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,15 +18,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Random;
 
 /**
- * @author Administrator
+ * @author chenshuai
  * 司机相关操作
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service(value = "driverInfoService")
 public class DriverInfoServiceImpl implements IDriverInfoService {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     @Autowired
     private IDriverInfoDao driverInfoDao;
@@ -43,6 +46,13 @@ public class DriverInfoServiceImpl implements IDriverInfoService {
         return driverInfoDao.findAll(pageable);
     }
 
+    /**
+     * @return boolean
+     * @description 添加一个司机
+     * @params [driverInfo]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean addNewDriver(DriverInfo driverInfo) {
 
@@ -74,13 +84,21 @@ public class DriverInfoServiceImpl implements IDriverInfoService {
             return true;
 
         } catch (Exception e) {
-            System.err.println("司机信息表 | 用户信息表 | 用户与组表 插入失败");
+            log.error("司机信息表 | 用户信息表 | 用户与组表 插入失败" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return boolean
+     * @description 删除某个司机
+     * @params [id]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean deleteById(String id) {
+
         DriverInfo driverInfo = driverInfoDao.findById(id);
         User user = userDao.findByLoginId(id);
         UserWithGroup userWithGroup = userWithGroupDao.findByUserId(id);
@@ -90,11 +108,18 @@ public class DriverInfoServiceImpl implements IDriverInfoService {
             userWithGroupDao.delete(userWithGroup);
             return true;
         } catch (Exception e) {
-            System.err.println("司机信息 | 用户表 | 用户与组表 删除失败");
+            log.error("司机信息 | 用户表 | 用户与组表 删除失败" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return boolean
+     * @description 修改某个司机
+     * @params [id, driverInfo]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean updateById(String id, DriverInfo driverInfo) {
 
@@ -105,18 +130,30 @@ public class DriverInfoServiceImpl implements IDriverInfoService {
             driverInfoDao.save(driverInfo);
             return true;
         } catch (Exception e) {
-            System.err.println("司机信息更新失败");
+            log.error("司机信息更新失败 " + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return com.ansel.bean.DriverInfo
+     * @description 查询单个司机详情
+     * @params [id]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public DriverInfo findById(String id) {
         return driverInfoDao.findById(id);
     }
 
-
-
+    /**
+     * @return java.util.List<java.lang.String>
+     * @description 查询所有司机编号
+     * @params []
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<String> findAllId() {
         return driverInfoDao.findAllId();

@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * @author chenshuai
@@ -23,7 +22,6 @@ import springfox.documentation.annotations.ApiIgnore;
 @CrossOrigin
 @RequestMapping(value = "/bill")
 @ControllerAdvice
-//@ApiIgnore
 @RestController
 @Api(value = "单据 controller")
 public class BillController extends ReturnType {

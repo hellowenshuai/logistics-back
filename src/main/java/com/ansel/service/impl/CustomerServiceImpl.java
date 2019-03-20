@@ -9,20 +9,23 @@ import com.ansel.dao.IUserDao;
 import com.ansel.dao.IUserWithGroupDao;
 import com.ansel.service.ICustomerService;
 import com.ansel.util.AddPeopleUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 /**
- * @author Administrator
+ * @author chenshuai
  * 客户服务
  */
 @Service(value = "customerService")
 public class CustomerServiceImpl implements ICustomerService {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
     @Autowired
     private IGroupDao groupDao;
@@ -36,8 +39,16 @@ public class CustomerServiceImpl implements ICustomerService {
     @Autowired
     private ICustomerDao customerDao;
 
+    /**
+     * @return boolean
+     * @description 添加一个新顾客
+     * @params [customer]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean save(CustomerInfo customer) {
+
         try {
             String customerCode = "KH";
             while (true) {
@@ -65,11 +76,18 @@ public class CustomerServiceImpl implements ICustomerService {
 
             return true;
         } catch (Exception e) {
-            System.err.println("客户 | 用户组关系表 | 用户 信息插入失败！");
+            log.error("客户 | 用户组关系表 | 用户 信息插入失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return boolean
+     * @description 删除一个客户
+     * @params [customerCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean delete(String customerCode) {
 
@@ -89,11 +107,18 @@ public class CustomerServiceImpl implements ICustomerService {
             customerDao.delete(customer);
             return true;
         } catch (Exception e) {
-            System.err.println("客户 | 用户组关系表 | 用户 信息删除失败！");
+            log.error("客户 | 用户组关系表 | 用户 信息删除失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return boolean
+     * @description 修改客户信息
+     * @params [customerCode, customer]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean update(String customerCode, CustomerInfo customer) {
         CustomerInfo temp = customerDao.findByCustomerCode(customerCode);
@@ -103,21 +128,42 @@ public class CustomerServiceImpl implements ICustomerService {
             customerDao.save(customer);
             return true;
         } catch (Exception e) {
-            System.err.println("顾客信息更新失败");
+            log.error("顾客信息更新失败！" + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * @return org.springframework.data.domain.Page<com.ansel.bean.CustomerInfo>
+     * @description 查询所有客户
+     * @params [pageable]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public Page<CustomerInfo> selectAllCusByPage(Pageable pageable) {
         return customerDao.findAll(pageable);
     }
 
+    /**
+     * @return com.ansel.bean.CustomerInfo
+     * @description 查询某个客户详情
+     * @params [customerCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public CustomerInfo selectByCustomerCode(String customerCode) {
         return customerDao.findByCustomerCode(customerCode);
     }
 
+    /**
+     * @return java.util.List<java.lang.String>
+     * @description 查询所有客户的编号
+     * @params []
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<String> selectAllCusCode() {
         return customerDao.findAllCustomerCode();

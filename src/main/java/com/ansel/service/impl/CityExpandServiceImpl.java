@@ -17,13 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author Administrator
+ * @author chenshuai
  * 线路相关操作
  */
 @Transactional()
 @Service(value = "cityExpandService")
 public class CityExpandServiceImpl implements ICityExpandService {
-    private static final Logger log = LoggerFactory.getLogger(CheckServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(CityExpandServiceImpl.class);
 
     @Autowired
     private ICityExpandDao cityExpandDao;
@@ -34,6 +34,13 @@ public class CityExpandServiceImpl implements ICityExpandService {
     @Autowired
     private IRouteInfoDao routeInfoDao;
 
+    /**
+     * @return java.util.List<com.ansel.bean.Region>
+     * @description 返回所有的城市信息
+     * @params []
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public List<Region> findAllRegions() {
         List<Region> regions = regionDao.findAll();
@@ -64,6 +71,13 @@ public class CityExpandServiceImpl implements ICityExpandService {
         return cityExpandDao.findAll(pageable);
     }
 
+    /**
+     * @return boolean
+     * @description 新增城市扩充信息
+     * @params [cityExpand]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean addExpand(CityExpand cityExpand) {
         try {
@@ -76,6 +90,13 @@ public class CityExpandServiceImpl implements ICityExpandService {
         }
     }
 
+    /**
+     * @return boolean
+     * @description 删除一条城市扩充信息
+     * @params [id]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean deleteExpand(int id) {
         try {
@@ -89,11 +110,25 @@ public class CityExpandServiceImpl implements ICityExpandService {
         }
     }
 
+    /**
+     * @return com.ansel.bean.CityExpand
+     * @description 得到一条的城市范围信息
+     * @params [id]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public CityExpand findById(int id) {
         return cityExpandDao.findById(id);
     }
 
+    /**
+     * @return boolean
+     * @description 更新一条城市信息
+     * @params [cityExpand]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean updateExpand(CityExpand cityExpand) {
         try {

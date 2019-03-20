@@ -9,17 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Administrator
+ * @author chenshuai
  * 结算业务
  */
-@Transactional(propagation = Propagation.REQUIRED)
+@Transactional(rollbackFor = Exception.class)
 @Service(value = "clearService")
 public class ClearServiceImpl implements IClearService {
     private static final Logger log = LoggerFactory.getLogger(ClearServiceImpl.class);
@@ -70,6 +69,7 @@ public class ClearServiceImpl implements IClearService {
             for (CargoReceipt cargoReceipt : cargoReceipts) {
                 DriverClear temp = driverClearDao.findByBackBillCode(cargoReceipt.getGoodsRevertBillCode());
                 if (temp==null) {
+                    //封装司机结算实体
                     DriverClear driverClear = new DriverClear();
                     driverClear.setBackBillCode(cargoReceipt.getGoodsRevertBillCode());
                     driverClear.setDriverCode(cargoReceipt.getDriverId());
@@ -117,8 +117,8 @@ public class ClearServiceImpl implements IClearService {
             double addCarriage = driverClear.getAddCarriage(); // 加运费
             double allCarriage = cargoReceiptDao.findByGoodsRevertBillCode(driverClear.getBackBillCode())
                     .getAllCarriage();
-
-            double balance = carryFee + bindInsurance + addCarriage - driverClear.getPayedMoney(); // 余额
+            // 余额
+            double balance = carryFee + bindInsurance + addCarriage - driverClear.getPayedMoney();
             driverClear.setBalance(balance);
             double money = allCarriage + bindInsurance + addCarriage;
             log.info("输入的是：" + driverClear.getPayedMoney());
@@ -144,18 +144,19 @@ public class ClearServiceImpl implements IClearService {
      */
     @Override
     public List<CustomerBillClear> selectCusclear(String eventName) {
-
-        List<CustomerBillClear> customerBillCleareds = new ArrayList(); // 已结
-        List<CustomerBillClear> customerBillUnClears = new ArrayList(); // 未结
+        // 已结
+        List<CustomerBillClear> customerBillClears = new ArrayList();
+        // 未结
+        List<CustomerBillClear> customerBillUnClears = new ArrayList();
 
         if ("已结运单".equals(eventName)) {
             List<GoodsBillEvent> goodsBillEvents = goodsBillEventDao.findByEventName("已结运单");
             for (GoodsBillEvent goodsBillEvent : goodsBillEvents) {
                 CustomerBillClear customerBillClear = customerBillClearDao
                         .findByGoodsBillCode(goodsBillEvent.getGoodsBillId());
-                customerBillCleareds.add(customerBillClear);
+                customerBillClears.add(customerBillClear);
             }
-            return customerBillCleareds;
+            return customerBillClears;
         } else {
             List<GoodsBillEvent> goodsBillEvents = goodsBillEventDao.findByEventName("未结");
             for (GoodsBillEvent goodsBillEvent : goodsBillEvents) {
@@ -217,17 +218,16 @@ public class ClearServiceImpl implements IClearService {
 
             double money = billMoney + insurance - carriageReduceFund;
             if (money!=receivedMoney) {
-                System.out.println(1);
-                System.out.println("结算失败");
+                log.debug("结算失败! ");
                 customerBillClearDao.save(customerBillClear);
             } else {
-                System.out.println("结算成功！");
+                log.debug("结算成功! ");
                 customerBillClearDao.save(customerBillClear);
                 goodsBillEventDao.updateStateByCode("已结运单", customerBillClear.getGoodsBillCode());
             }
             return true;
         } catch (Exception e) {
-            System.err.println("客户结算 插入失败！");
+            log.error("客户结算 插入失败! ");
             return false;
         }
     }
@@ -241,25 +241,27 @@ public class ClearServiceImpl implements IClearService {
      */
     @Override
     public List<ProxyFeeClear> selectHelpclear(String eventName) {
-        List<ProxyFeeClear> proxyFeeCleareds = new ArrayList(); // 已结
-        List<ProxyFeeClear> proxyFeeUnClears = new ArrayList(); // 未结
+        // 已结
+        List<ProxyFeeClear> proxyFeeClears = new ArrayList();
+        // 未结
+        List<ProxyFeeClear> proxyFeeUnClears = new ArrayList();
 
         if (eventName.equals("已结代收")) {
             List<GoodsBillEvent> goodsBillEvents = goodsBillEventDao.findByEventName("已结运单");
             for (GoodsBillEvent goodsBillEvent : goodsBillEvents) {
-
-                GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillEvent.getGoodsBillId()); // 找到货运单主表
+                // 找到货运单主表
+                GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillEvent.getGoodsBillId());
                 if (goodsBill.getHelpAcceptPayment()!=0) { // 是代收
                     ProxyFeeClear proxyFeeClear = proxyFeeClearDao.findByGoodsBillCode(goodsBillEvent.getGoodsBillId());
-                    proxyFeeCleareds.add(proxyFeeClear);
+                    proxyFeeClears.add(proxyFeeClear);
                 }
             }
-            return proxyFeeCleareds;
+            return proxyFeeClears;
         } else {
             List<GoodsBillEvent> goodsBillEvents = goodsBillEventDao.findByEventName("未结");
             for (GoodsBillEvent goodsBillEvent : goodsBillEvents) {
-
-                GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillEvent.getGoodsBillId()); // 找到货运单主表
+                // 找到货运单主表
+                GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillEvent.getGoodsBillId());
                 if (goodsBill.getHelpAcceptPayment()!=0) { // 是代收
 
                     ProxyFeeClear temp = proxyFeeClearDao.findByGoodsBillCode(goodsBillEvent.getGoodsBillId());
@@ -272,7 +274,7 @@ public class ClearServiceImpl implements IClearService {
                         double goodsPayChange = goodsBill.getMoneyOfChangePay() - goodsBill.getHelpAcceptPayment(); // 变更
                         proxyFeeClear.setGoodsPayChange(goodsPayChange); // 变更
                         proxyFeeClear.setCommisionRate(0.02f); // 佣金率
-                        // 已收佣金 填
+                        // 已收佣金 填 TODO 佣金计算
                         // 应收佣金 算
                         // 结算时间 填
                         proxyFeeClearDao.save(proxyFeeClear);
@@ -299,15 +301,15 @@ public class ClearServiceImpl implements IClearService {
         return proxyFeeClearDao.findByGoodsBillCode(goodsBillCode);
     }
 
+    /**
+     * @return boolean
+     * @description 代收结算（前台返回一个完整的实体）
+     * @params [proxyFeeClear]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
     @Override
     public boolean helpClear(ProxyFeeClear proxyFeeClear) {
-        /**
-         *@description 代收结算（前台返回一个完整的实体）
-         *@params [proxyFeeClear]
-         *@return boolean
-         *@creator chenshuai
-         *@date 2019/3/20 0020
-         */
         try {
             double factReceiveFund = proxyFeeClear.getFactReceiveFund(); // 实收
             double commisionRate = proxyFeeClear.getCommisionRate(); // 佣金率

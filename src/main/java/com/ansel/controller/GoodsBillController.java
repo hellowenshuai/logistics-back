@@ -53,6 +53,7 @@ public class GoodsBillController extends ReturnType {
 	/**
 	 * 添加货物
 	 */
+	@ApiOperation(value = "添加货物")
 	@RequestMapping(value = "/addGoods/{goodsBillDetailId}", method = RequestMethod.POST, produces = "application/json")
 	public String addGoods(@PathVariable("goodsBillDetailId") String goodsBillDetailId, CargoReceiptDetail cargoReceiptDetail) {
 		
@@ -67,6 +68,7 @@ public class GoodsBillController extends ReturnType {
 	/**
 	 * 查询所有运单
 	 */
+	@ApiOperation(value = "查询所有运单")
 	@RequestMapping(value = "/selectByEvent", method = RequestMethod.GET)
 	public Result selectAllGoodsBills(@RequestParam("pageNum") int pageNum, @RequestParam("limit") int limit) {
 		Pageable pageable = PageRequest.of(pageNum-1, limit);
@@ -78,6 +80,7 @@ public class GoodsBillController extends ReturnType {
 	/**
 	 * 查询运单状态
 	 */
+	@ApiOperation(value = "查询运单状态")
 	@RequestMapping(value = "/selectByEvent/{eventName}", method = RequestMethod.GET)
 	public Result selectGoodsBillByEvent(@PathVariable("eventName") String eventName, @RequestParam("pageNum") int pageNum, @RequestParam("limit") int limit) {
 		Pageable pageable = PageRequest.of(pageNum-1, limit);
@@ -89,6 +92,7 @@ public class GoodsBillController extends ReturnType {
 	/**
 	 * 通过id查询单个货运单
 	 */
+	@ApiOperation(value = "通过id查询单个货运单")
 	@RequestMapping(value = "/selectByCode/{goodsBillCode}", method = RequestMethod.GET)
 	public GoodsBill selectGoodsBillByCode(@PathVariable("goodsBillCode") String goodsBillCode) {
 		GoodsBill goodsBill = goodsBillService.selectByGoodsBillCode(goodsBillCode);
@@ -98,6 +102,7 @@ public class GoodsBillController extends ReturnType {
 	/**
 	 * 修改货运单
 	 */
+	@ApiOperation(value = "修改货运单")
 	@RequestMapping(value = "/updateByCode/{goodsBillCode}", method = RequestMethod.PUT)
 	public String updateGoodsBill(GoodsBill goodsBill, @PathVariable("goodsBillCode") String goodsBillCode) {
 		
@@ -112,6 +117,7 @@ public class GoodsBillController extends ReturnType {
 	/**
 	 * 删除货运单
 	 */
+	@ApiOperation(value = "删除货运单")
 	@RequestMapping(value = "/deleteByCode/{goodsBillCode}", method = RequestMethod.PUT)
 	public String deleteGoodsBill(@PathVariable("goodsBillCode") String goodsBillCode) {
 		
@@ -123,7 +129,7 @@ public class GoodsBillController extends ReturnType {
 		return SUCCESS;
 	}
 	
-	@ApiOperation(value = "获取一个用户的待收货物")
+	@ApiOperation(value = "查询当前客户下的”未结“的货运单")
 	@RequestMapping(value = "/findWait/{customerCode}", method = RequestMethod.GET)
 	public Result findWaitReceived(@PathVariable("customerCode") String customerCode) {
 		List<GoodsBill> list = goodsBillService.findWaitReceive(customerCode);

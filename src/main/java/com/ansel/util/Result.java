@@ -1,7 +1,7 @@
 package com.ansel.util;
 
 /**
- * @author Administrator
+ * @author chenshuai
  * 结果集封装
  */
 public class Result {

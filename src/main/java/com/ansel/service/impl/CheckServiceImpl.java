@@ -17,6 +17,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
+/**
+ * @author chenshuai
+ */
 @Transactional(rollbackFor = Exception.class)
 @Service(value = "iCheckService")
 public class CheckServiceImpl implements ICheckService {
@@ -57,7 +60,7 @@ public class CheckServiceImpl implements ICheckService {
             extraIncomeDao.save(extraIncome);
             return true;
         } catch (Exception e) {
-            log.info("营业外收入添加失败" + e.getMessage());
+            log.error("营业外收入添加失败" + e.getMessage());
             return false;
         }
     }
@@ -120,7 +123,7 @@ public class CheckServiceImpl implements ICheckService {
             financeFeeDao.save(financeFee);
             return true;
         } catch (Exception e) {
-            log.info("财务费用添加失败" + e.getMessage());
+            log.error("财务费用添加失败" + e.getMessage());
             return false;
         }
     }
@@ -162,7 +165,7 @@ public class CheckServiceImpl implements ICheckService {
             manageFeeDao.save(manageFee);
             return true;
         } catch (Exception e) {
-            log.info("管理费用添加失败" + e.getMessage());
+            log.error("管理费用添加失败" + e.getMessage());
             return false;
         }
     }
@@ -216,7 +219,7 @@ public class CheckServiceImpl implements ICheckService {
             employeeWageDao.save(employeeWage);
             return true;
         } catch (Exception e) {
-            log.info("员工工资添加失败" + e.getMessage());
+            log.error("员工工资添加失败" + e.getMessage());
             return false;
         }
     }
@@ -249,7 +252,7 @@ public class CheckServiceImpl implements ICheckService {
             date = sdf.parse(beginTime);
             date1 = sdf.parse(endTime);
         } catch (ParseException e) {
-            log.info("日期转换失败" + e.getMessage());
+            log.error("日期转换失败" + e.getMessage());
         }
         return employeeWageDao.findByDate(date, date1);
     }
@@ -282,7 +285,7 @@ public class CheckServiceImpl implements ICheckService {
             date = sdf.parse(beginTime);
             date1 = sdf.parse(endTime);
         } catch (ParseException e) {
-            log.info("查询搬运费失败" + e.getMessage());
+            log.error("查询搬运费失败" + e.getMessage());
         }
         return extraClearDao.findByBalanceDate(date, date1);
     }
@@ -417,7 +420,7 @@ public class CheckServiceImpl implements ICheckService {
             iMonthlyTempDao.save(iMonthlyTemp);
             return iMonthlyTemp;
         } catch (Exception e) {
-            log.info("月报信息添加失败" + e.getMessage());
+            log.error("月报信息添加失败" + e.getMessage());
             return null;
         }
     }
