@@ -10,28 +10,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 
 /**
- * 
- * @author Ansel
- *
+ * @author chenshuai
  */
 @SpringBootApplication
 public class LogisticsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LogisticsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LogisticsApplication.class, args);
+    }
 
-	@Bean
-	public HttpMessageConverters fastJsonHttpMessageConverters() {
-		// 1.需要定义一个Convert转换消息的对象
-		FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-		// 2.添加fastjson的配置信息，比如是否要格式化返回的json数据
-		FastJsonConfig fastJsonConfig = new FastJsonConfig();
-		fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-		// 3.在convert中添加配置信息
-		fastConverter.setFastJsonConfig(fastJsonConfig);
+    @Bean
+    public HttpMessageConverters fastJsonHttpMessageConverters() {
+        // 1.需要定义一个Convert转换消息的对象
+        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+        // 2.添加fastjson的配置信息，比如是否要格式化返回的json数据
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        // 3.在convert中添加配置信息
+        fastConverter.setFastJsonConfig(fastJsonConfig);
 
-		HttpMessageConverter<?> converter = fastConverter;
-		return new HttpMessageConverters(converter);
-	}
+        HttpMessageConverter<?> converter = fastConverter;
+        return new HttpMessageConverters(converter);
+    }
 }
