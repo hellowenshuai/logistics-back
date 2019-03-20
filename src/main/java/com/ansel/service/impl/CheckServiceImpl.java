@@ -215,7 +215,13 @@ public class CheckServiceImpl implements ICheckService {
      */
     @Override
     public boolean save(EmployeeWage employeeWage) {
+        //依据当前员工id，从数据库中查询
+        EmployeeWage employeeWage1 = employeeWageDao.findByEmployeeCode(employeeWage.getEmployeeCode());
         try {
+            //说明数据库中已经有这个人的薪资情况，所以，应该是修改操作
+            if (employeeWage1!=null) {
+                employeeWage.setId(employeeWage1.getId());
+            }
             employeeWageDao.save(employeeWage);
             return true;
         } catch (Exception e) {
