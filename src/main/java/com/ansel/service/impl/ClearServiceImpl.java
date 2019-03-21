@@ -320,7 +320,7 @@ public class ClearServiceImpl implements IClearService {
             double receivedCommision = proxyFeeClear.getReceivedCommision(); // 已收佣金
 
             double commisionReceivable = factReceiveFund * commisionRate - receivedCommision; // 应收
-
+            log.info("commisionReceivable:" + commisionReceivable);
             proxyFeeClear.setCommisionReceivable(commisionReceivable);
 
             if ((commisionRate * factReceiveFund > receivedCommision) || (commisionRate > 0 && factReceiveFund==0)
