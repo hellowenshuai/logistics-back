@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ITransferInfoDao extends JpaRepository<TransferInfo, Long> {
 
-    public TransferInfo findByGoodsBillCodeOrTransferStationContaining(String goodsBillCode, String transferStation);
+    public TransferInfo findByGoodsBillCodeAndTransferStationContaining(String goodsBillCode, String transferStation);
 
     public List<TransferInfo> findByGoodsBillCode(String goodsBillCode);
 

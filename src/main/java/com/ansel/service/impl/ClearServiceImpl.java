@@ -112,9 +112,12 @@ public class ClearServiceImpl implements IClearService {
     @Override
     public boolean driClear(DriverClear driverClear) {
         try {
-            double carryFee = driverClear.getCarryFee(); // 承运费
-            double bindInsurance = driverClear.getBindInsurance();// 定装保证金
-            double addCarriage = driverClear.getAddCarriage(); // 加运费
+            // 承运费
+            double carryFee = driverClear.getCarryFee();
+            // 定装保证金
+            double bindInsurance = driverClear.getBindInsurance();
+            // 加运费
+            double addCarriage = driverClear.getAddCarriage();
             double allCarriage = cargoReceiptDao.findByGoodsRevertBillCode(driverClear.getBackBillCode())
                     .getAllCarriage();
             // 余额
@@ -122,6 +125,7 @@ public class ClearServiceImpl implements IClearService {
             driverClear.setBalance(balance);
             double money = allCarriage + bindInsurance + addCarriage;
             log.info("输入的是：" + driverClear.getPayedMoney());
+            log.info("money：" + money);
             if (money!=driverClear.getPayedMoney()) {
                 driverClearDao.save(driverClear);
             } else {
