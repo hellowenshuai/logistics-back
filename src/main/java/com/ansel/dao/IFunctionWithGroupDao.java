@@ -12,4 +12,6 @@ public interface IFunctionWithGroupDao extends JpaRepository<FunctionWithGroup, 
 	
 	public FunctionWithGroup findByFunctionIdAndGroupId(int funtionId, int groupId);
 
+	public int deleteByFunctionIdAndAndGroupId(int funtionId, int groupId);
+
 }

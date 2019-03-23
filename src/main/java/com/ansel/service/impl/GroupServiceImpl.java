@@ -13,8 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @Service(value = "groupService")
 @Transactional(rollbackFor = Exception.class)
@@ -169,26 +168,56 @@ public class GroupServiceImpl implements IGroupService {
     public boolean addFuncGro(int groupId, int[] functionId) {
 
         log.info("groupId:" + groupId);
-        log.info("functionIds:" + functionId.toString());
-        List<Integer> list = new LinkedList<>();
+        //新的权限id集合
+        List<Integer> newFunctionIds = new LinkedList<>();
         for (int i : functionId) {
-            list.add(i);
+            newFunctionIds.add(i);
         }
-        log.info("新增权限list:" + list.toString());
-
-        for (int i = 0; i < 11; i++) {
-            //查询该用户组原来没有的权限
-            if (functionWithGroupDao.findByFunctionIdAndGroupId(i + 1, groupId)==null) {
-                log.info("该用户组原来没有的权限:" + i);
-                if (list.contains(i + 1)) {
-                    //为该用户添加新权限
-                    FunctionWithGroup functionWithGroup = new FunctionWithGroup();
-                    functionWithGroup.setFunctionId(i + 1);
-                    functionWithGroup.setGroupId(groupId);
-                    functionWithGroupDao.save(functionWithGroup);
-                }
+        log.info("新增权限list:" + newFunctionIds.toString());
+        //旧的权限id集合
+        List<FunctionWithGroup> functionWithGroups = functionWithGroupDao.findByGroupId(groupId);
+        List<Integer> oldFunctionIds = new ArrayList<>();
+        functionWithGroups.stream().forEach(functionWithGroup -> {
+            oldFunctionIds.add(functionWithGroup.getFunctionId());
+        });
+        log.info("原来权限list:" + oldFunctionIds.toString());
+        //求出两个集合的交集
+        Set<Integer> functionSet = new HashSet<Integer>();
+        functionSet.addAll(oldFunctionIds);
+        functionSet.retainAll(newFunctionIds);
+        //set转为list
+        List<Integer> functionList = new ArrayList<>(functionSet);
+        //需要新增权限的差集
+        List<Integer> insertFunctionIds = new ArrayList<>();
+        for (int i = 0; i < newFunctionIds.size(); i++) {
+            if (!functionList.contains(newFunctionIds.get(i))) {
+                insertFunctionIds.add(newFunctionIds.get(i));
             }
         }
+        //需要删除权限的差集
+        List<Integer> removeFunctionIds = new ArrayList<>();
+        for (int i = 0; i < oldFunctionIds.size(); i++) {
+            if (!functionList.contains(oldFunctionIds.get(i))) {
+                removeFunctionIds.add(oldFunctionIds.get(i));
+            }
+        }
+        //移除某些权限
+        for (int i = 0; i < removeFunctionIds.size(); i++) {
+            Integer functionId1 = removeFunctionIds.get(i).intValue();
+            int count = functionWithGroupDao.deleteByFunctionIdAndAndGroupId(functionId1, groupId);
+            if (count > 0) {
+                log.info("删除成功groupId：" + groupId + "functionId: " + functionId1);
+            }
+        }
+        //新增某些权限
+        for (int i = 0; i < insertFunctionIds.size(); i++) {
+            //为该用户添加新权限
+            FunctionWithGroup functionWithGroup = new FunctionWithGroup();
+            functionWithGroup.setFunctionId(insertFunctionIds.get(i));
+            functionWithGroup.setGroupId(groupId);
+            functionWithGroupDao.save(functionWithGroup);
+        }
+
         return true;
     }
 
