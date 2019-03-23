@@ -78,21 +78,21 @@ public class CargoReceiptServiceImpl implements ICargoReceiptService {
                     //   TODO 首条线路的中转城市id 与之后的线路的中转城市id 的长的比较，取最少中转城市的最优解
                     passStation = (temp.length() < passStation.length() ? temp : passStation);
                 }
-                String[] pass_station = passStation.split(",");
+                String[] passStationArray = ",".split(passStation);
                 //通过运输单id寻找 接货单id  TODO 无用
                 String goodsBillCode = cargoReceiptDetailDao.findByGoodsRevertBillId(cargoReceipt.getGoodsRevertBillCode()).getGoodsBillDetailId();
                 //通过接货单id获取 接货单详情
                 GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
 
                 //中转费用是1.3倍 *距离
-                double transfer_fee = 1.3 * pass_station.length;
-                goodsBill.setTransferFee(transfer_fee);
+                double transferFee = 1.3 * passStationArray.length;
+                goodsBill.setTransferFee(transferFee);
 
-                for (int i = 0; i < pass_station.length; i++) {
+                for (int i = 0; i < passStationArray.length; i++) {
                     //获取中转站城市
-                    String station_name = regionDao.findById(Integer.valueOf(pass_station[i])).getCity();
+                    String stationName = regionDao.findById(Integer.valueOf(passStationArray[i])).getCity();
                     result += (i==0 ? "" : ",");
-                    result += station_name;
+                    result += stationName;
                 }
                 goodsBill.setTransferStation(result);
                 // 重新保存接货单
@@ -219,12 +219,12 @@ public class CargoReceiptServiceImpl implements ICargoReceiptService {
     public boolean submit(CargoReceipt cargoReceipt) {
 
         try {
-            //更新运输单
+            /** 3.修改运输单状态*/
             cargoReceipt.setBackBillState("未到车辆");
             cargoReceiptDao.save(cargoReceipt);
 
             String goodsBillCode = cargoReceiptDetailDao.findByGoodsRevertBillId(cargoReceipt.getGoodsRevertBillCode()).getGoodsBillDetailId();
-            /**获取运输单 事件*/
+            /** 2.改货运单事件状态*/
             GoodsBillEvent goodsBillEvent = goodsBillEventDao.findByGoodsBillId(goodsBillCode);
 
             goodsBillEvent.setEventName("未到");
