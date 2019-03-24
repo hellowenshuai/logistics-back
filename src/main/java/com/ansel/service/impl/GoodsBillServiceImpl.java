@@ -1,13 +1,7 @@
 package com.ansel.service.impl;
 
-import com.ansel.bean.BillInfo;
-import com.ansel.bean.CargoReceiptDetail;
-import com.ansel.bean.GoodsBill;
-import com.ansel.bean.GoodsBillEvent;
-import com.ansel.dao.IBillInfoDao;
-import com.ansel.dao.ICargoReceiptDetailDao;
-import com.ansel.dao.IGoodsBillDao;
-import com.ansel.dao.IGoodsBillEventDao;
+import com.ansel.bean.*;
+import com.ansel.dao.*;
 import com.ansel.service.IGoodsBillService;
 import com.ansel.util.AddPeopleUtils;
 import org.slf4j.Logger;
@@ -18,10 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author chenshuai
@@ -44,6 +35,9 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
 
     @Autowired
     private ICargoReceiptDetailDao cargoReceiptDetailDao;
+
+    @Autowired
+    private ICallbackDao callbackDao;
 
     /**
      * @return java.util.Map<?   ,   ?>
@@ -171,7 +165,7 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
             goodsBillDao.save(goodsBill);
             return true;
         } catch (Exception e) {
-            log.error("货运单更新失败"+e.getMessage());
+            log.error("货运单更新失败" + e.getMessage());
             return false;
         }
     }
@@ -192,7 +186,7 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
         goodsBillEvent.setOccurTime(new Date());
 
         BillInfo billInfo = billInfoDao.findByBillCode(goodsBillCode);
-        if (billInfo==null){
+        if (billInfo==null) {
             return false;
         }
         billInfo.setBillState("作废");
@@ -206,7 +200,7 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
             cargoReceiptDetailDao.delete(cargoReceiptDetail);
             return true;
         } catch (Exception e) {
-            log.error("货运单删除失败"+e.getMessage());
+            log.error("货运单删除失败" + e.getMessage());
             return false;
         }
     }
@@ -225,14 +219,24 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
 
     /**
      * @return java.util.List<com.ansel.bean.GoodsBill>
-     * @description 查询当前客户下的”未结“的货运单
+     * @description 查询当前客户下的”未结“的货运单  且有提货通告的货运单
      * @params [customerCode]
      * @creator chenshuai
      * @date 2019/3/20 0020
      */
     @Override
     public List<GoodsBill> findWaitReceive(String customerCode) {
-        return goodsBillDao.findWaitReceived(customerCode);
+        List<GoodsBill> goodsBills = goodsBillDao.findWaitReceived(customerCode);
+        //查询改货运单是否有提货回告，如果有，才返回此对象。没有就不返回。TODO xxx
+        List<GoodsBill> result = new ArrayList<>();
+        for (GoodsBill goodsBill : goodsBills) {
+            String goodsBillCode = goodsBill.getGoodsBillCode();
+            CallbackInfo callbackInfo = callbackDao.findByGoodsBillIdAndType(goodsBillCode, "到货回告");
+            if (null!=callbackInfo) {
+                result.add(goodsBill);
+            }
+        }
+        return result;
     }
 
     /**
