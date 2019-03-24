@@ -249,8 +249,8 @@ public class ClearServiceImpl implements IClearService {
         List<ProxyFeeClear> proxyFeeClears = new ArrayList();
         // 未结
         List<ProxyFeeClear> proxyFeeUnClears = new ArrayList();
-
-        if (eventName.equals("已结代收")) {
+//TODO 有疑惑  已结运单  已结代收
+        if (eventName.equals("已结运单")) {
             List<GoodsBillEvent> goodsBillEvents = goodsBillEventDao.findByEventName("已结运单");
             for (GoodsBillEvent goodsBillEvent : goodsBillEvents) {
                 // 找到货运单主表
@@ -307,7 +307,7 @@ public class ClearServiceImpl implements IClearService {
 
     /**
      * @return boolean
-     * @description 代收结算（前台返回一个完整的实体）
+     * @description 代收结算（结算成功之后，这个货运单状态就是已结运单）
      * @params [proxyFeeClear]
      * @creator chenshuai
      * @date 2019/3/20 0020
@@ -319,10 +319,12 @@ public class ClearServiceImpl implements IClearService {
             double commisionRate = proxyFeeClear.getCommisionRate(); // 佣金率
             double receivedCommision = proxyFeeClear.getReceivedCommision(); // 已收佣金
 
-            double commisionReceivable = factReceiveFund * commisionRate - receivedCommision; // 应收
-            log.info("commisionReceivable:" + commisionReceivable);
+            double commisionReceivable = factReceiveFund * commisionRate - receivedCommision; // 应收佣金
+            log.info("应收佣金:" + commisionReceivable);
             proxyFeeClear.setCommisionReceivable(commisionReceivable);
-
+            // 1.应收佣金》已收佣金
+            // 2.佣金率 》0 且 实收佣金=0
+            // 3.应收佣金！=0
             if ((commisionRate * factReceiveFund > receivedCommision) || (commisionRate > 0 && factReceiveFund==0)
                     || (commisionReceivable!=0)) {
                 proxyFeeClearDao.save(proxyFeeClear);
