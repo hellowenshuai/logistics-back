@@ -72,7 +72,7 @@ public class TransferServiceImpl implements ITransferService {
 
     /**
      * @return java.util.List<com.ansel.bean.GoodsBill>
-     * @description 查询一个司机的所有运单(中转 | 到货)
+     * @description 查询一个司机的所有运单(中转 | 到货) 未到车辆
      * @params [type, driverId]
      * @creator chenshuai
      * @date 2019/3/19 0019
@@ -84,9 +84,16 @@ public class TransferServiceImpl implements ITransferService {
         List<GoodsBill> result = new LinkedList<>();
         //判断中转情况
         for (GoodsBill goodsBill : list) {
+            //如果这个货运单没有中转城市，直接跳出循环
+            String transferStation = goodsBill.getTransferStation();
+            if ("".equals(transferStation.trim())) {
+                continue;
+            }
             String[] citys = goodsBill.getTransferStation().split("，");
-            //？？
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[citys.length - 1])==null) {
+            /**
+             * 货运单编号+中转城市，查询出中转记录，说明在数据库中查询不到中转记录，就将数据返回给前端*/
+            //如果有多个中转城市，此时以第一个为中转城市
+            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[0])==null) {
                 result.add(goodsBill);
             }
         }
@@ -104,11 +111,13 @@ public class TransferServiceImpl implements ITransferService {
     public TransferComInfo findByGoodsBillCode(String goodsBillCode) {
 
         GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
-        String[] citys = goodsBill.getTransferStation().split("，");
+        String transferStation = goodsBill.getTransferStation().trim();
+
+        String[] cityArray = transferStation.split("，");
         TransferComInfo transferComInfo = new TransferComInfo();
-        for (String string : citys) {
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, string)==null) {
-                transferComInfo = transferComInfoDao.findByCity(string);
+        for (String city : cityArray) {
+            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, city)==null) {
+                transferComInfo = transferComInfoDao.findByCity(city);
                 break;
             }
         }
@@ -117,7 +126,7 @@ public class TransferServiceImpl implements ITransferService {
 
     /**
      * @return boolean
-     * @description 添加中转信息
+     * @description 添加中转信息, 之后，到货管理中才可以看到此运单
      * @params [transferInfo]
      * @creator chenshuai
      * @date 2019/3/20 0020
@@ -136,7 +145,7 @@ public class TransferServiceImpl implements ITransferService {
 
     /**
      * @return java.util.List<com.ansel.bean.GoodsBill>
-     * @description 查询一个司机的所有到货运单
+     * @description 查询一个司机的所有 未到车辆 货运单
      * @params [type, driverId]
      * @creator chenshuai
      * @date 2019/3/20 0020
@@ -149,22 +158,28 @@ public class TransferServiceImpl implements ITransferService {
         List<GoodsBill> result = new LinkedList<>();
         //判断中转情况
         for (int i = 0; i < list.size(); i++) {
-            String[] citys = list.get(i).getTransferStation().split("，");
-            String transferStation = "%" + citys[citys.length - 1] + "%";
+            String transferStation1 = list.get(i).getTransferStation().trim();
+            if ("".equals(transferStation1)) {
+                result.add(list.get(i));
+                continue;
+            }
+            String[] cityArray = transferStation1.split("，");
+            String transferStation = "%" + cityArray[0] + "%";
             String goodsBillCode = list.get(i).getGoodsBillCode();
-            System.out.println(transferStation);
-            TransferInfo byGoodsBillCodeAndTransferStationContaining = transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation);
-            System.out.println(byGoodsBillCodeAndTransferStationContaining);
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation)!=null) {
+            log.info("transferStation:" + transferStation);
+            TransferInfo transferInfo = transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation);
+            log.info("TransferInfo:" + transferInfo);
+            if (null!=transferInfo) {
                 result.add(list.get(i));
             }
         }
+        log.info("result:", result.toArray().toString());
         return result;
     }
 
     /**
      * @return java.util.List<com.ansel.bean.GoodsBill>
-     * @description 中转回告所需数据
+     * @description 具有中转回告的所有货运单
      * @params []
      * @creator chenshuai
      * @date 2019/3/20 0020
@@ -172,14 +187,13 @@ public class TransferServiceImpl implements ITransferService {
     @Override
     public List<GoodsBill> findOnWayBills() {
 
-        // TODO Auto-generated method stub
         List<GoodsBill> list = goodsBillDao.findOnWayBills();
         List<GoodsBill> result = new LinkedList<>();
         for (GoodsBill goodsBill : list) {
-//			List<TransferInfo> infos = transferInfoDao.findByGoodsBillCode(goodsBill.getGoodsBillCode());
+            //查询司机 1.有中转信息而 2.无回告的 3.中转城市不为空的 哪些运单
+            TransferInfo transferInfo = transferInfoDao.findByGoodsBillCode(goodsBill.getGoodsBillCode());
             CallbackInfo callbackInfo = callbackDao.findByGoodsBillIdAndType(goodsBill.getGoodsBillCode(), "中转回告");
-//			String[] citys = goodsBill.getTransferStation().split("，");
-            if (callbackInfo==null) {
+            if (transferInfo!=null && callbackInfo==null && !"".equals(goodsBill.getTransferStation())) {
                 result.add(goodsBill);
             }
         }
