@@ -70,7 +70,7 @@ public class CargoReceiptServiceImpl implements ICargoReceiptService {
             /**获取首条线路的所有中转城市的城市id*/
             String passStation = routeList.get(0).getPassStation();
             String result = "";
-            //
+            //中转城市不为空
             if (null!=passStation && !"".equals(passStation)) {
                 for (int i = 1; i < routeList.size(); i++) {
                     //获取临时城市id数组
@@ -78,7 +78,7 @@ public class CargoReceiptServiceImpl implements ICargoReceiptService {
                     //   TODO 首条线路的中转城市id 与之后的线路的中转城市id 的长的比较，取最少中转城市的最优解
                     passStation = (temp.length() < passStation.length() ? temp : passStation);
                 }
-                String[] passStationArray = ",".split(passStation);
+                String[] passStationArray = passStation.split(",");
                 //通过运输单id寻找 接货单id  TODO 无用
                 String goodsBillCode = cargoReceiptDetailDao.findByGoodsRevertBillId(cargoReceipt.getGoodsRevertBillCode()).getGoodsBillDetailId();
                 //通过接货单id获取 接货单详情
@@ -91,7 +91,7 @@ public class CargoReceiptServiceImpl implements ICargoReceiptService {
                 for (int i = 0; i < passStationArray.length; i++) {
                     //获取中转站城市
                     String stationName = regionDao.findById(Integer.valueOf(passStationArray[i])).getCity();
-                    result += (i==0 ? "" : ",");
+                    result += (i==0 ? "" : "，");
                     result += stationName;
                 }
                 goodsBill.setTransferStation(result);
