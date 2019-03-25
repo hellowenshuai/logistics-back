@@ -98,9 +98,10 @@ public class TransferController extends ReturnType {
 
     @ApiOperation(value = "查询运单的中转详情")
     @RequestMapping(value = "/detail/{goodsBillCode}", method = RequestMethod.GET)
-    public TransferComInfo detail(@PathVariable("goodsBillCode") String goodsBillCode) {
-
-        TransferComInfo transferComInfo = transferService.findByGoodsBillCode(goodsBillCode);
+    public TransferComInfo detail(@PathVariable("goodsBillCode") String goodsBillCode,
+                                  @RequestParam("transferStation") String transferStation) {
+        System.out.println("transferStation:"+transferStation);
+        TransferComInfo transferComInfo = transferService.findByGoodsBillCodeAndTransferStation(goodsBillCode,transferStation);
         return transferComInfo;
 
     }

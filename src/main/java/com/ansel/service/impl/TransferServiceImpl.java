@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -79,11 +80,17 @@ public class TransferServiceImpl implements ITransferService {
      */
     @Override
     public List<GoodsBill> transferGoods(String type, String driverId) {
-        //
+        // TODO 1.待修改
         List<GoodsBill> list = goodsBillDao.transferState(type, driverId);
         List<GoodsBill> result = new LinkedList<>();
         //判断中转情况
-        for (GoodsBill goodsBill : list) {
+        for (GoodsBill goodsBillx : list) {
+            GoodsBill goodsBill = null;
+            try {
+                goodsBill = (GoodsBill)goodsBillx.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
             //如果这个货运单没有中转城市，直接跳出循环
             String transferStation = goodsBill.getTransferStation();
             if ("".equals(transferStation.trim())) {
@@ -93,8 +100,17 @@ public class TransferServiceImpl implements ITransferService {
             /**
              * 货运单编号+中转城市，查询出中转记录，说明在数据库中查询不到中转记录，就将数据返回给前端*/
             //如果有多个中转城市，此时以第一个为中转城市
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[0])==null) {
-                result.add(goodsBill);
+            for (int i = 0; i < citys.length; i++) {
+                if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[i])==null) {
+                    goodsBill.setTransferStation(citys[i]);
+                    goodsBill.setGoodsBillCode(goodsBill.getGoodsBillCode());
+                    result.add(goodsBill);
+                    GoodsBill goodsBill1 = new GoodsBill();
+                    goodsBill1.setGoodsBillCode(goodsBill.getGoodsBillCode());
+                    goodsBill1.setTransferStation(goodsBill.getTransferStation());
+                    goodsBill1.setRemark(goodsBill.getRemark());
+                    log.info("goodsBill1:" + goodsBill1);
+                }
             }
         }
         return result;
@@ -111,10 +127,14 @@ public class TransferServiceImpl implements ITransferService {
     public TransferComInfo findByGoodsBillCode(String goodsBillCode) {
 
         GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
+        if (goodsBill==null) {
+            return null;
+        }
         String transferStation = goodsBill.getTransferStation().trim();
 
         String[] cityArray = transferStation.split("，");
         TransferComInfo transferComInfo = new TransferComInfo();
+        //TODO 待修改
         for (String city : cityArray) {
             if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, city)==null) {
                 transferComInfo = transferComInfoDao.findByCity(city);
@@ -153,7 +173,6 @@ public class TransferServiceImpl implements ITransferService {
     @Override
     public List<GoodsBill> arriveGoods(String type, String driverId) {
 
-        // TODO Auto-generated method stub
         List<GoodsBill> list = goodsBillDao.transferState(type, driverId);
         List<GoodsBill> result = new LinkedList<>();
         //判断中转情况
@@ -163,15 +182,22 @@ public class TransferServiceImpl implements ITransferService {
                 result.add(list.get(i));
                 continue;
             }
+            // TODO 待修改
+            List<TransferInfo> transferInfoList = new ArrayList<>();
             String[] cityArray = transferStation1.split("，");
-            String transferStation = "%" + cityArray[0] + "%";
-            String goodsBillCode = list.get(i).getGoodsBillCode();
-            log.info("transferStation:" + transferStation);
-            TransferInfo transferInfo = transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation);
-            log.info("TransferInfo:" + transferInfo);
-            if (null!=transferInfo) {
+            for (int j = 0; j < cityArray.length; j++) {
+                String transferStation = "%" + cityArray[0] + "%";
+                String goodsBillCode = list.get(i).getGoodsBillCode();
+                log.info("transferStation:" + transferStation);
+                TransferInfo transferInfo = transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation);
+                if (transferInfo!=null) {
+                    transferInfoList.add(transferInfo);
+                }
+            }
+            if (transferInfoList.size()==cityArray.length) {
                 result.add(list.get(i));
             }
+            log.info("transferInfoList:" + transferInfoList.toString());
         }
         log.info("result:", result.toArray().toString());
         return result;
@@ -186,7 +212,7 @@ public class TransferServiceImpl implements ITransferService {
      */
     @Override
     public List<GoodsBill> findOnWayBills() {
-
+// TODO 待修改
         List<GoodsBill> list = goodsBillDao.findOnWayBills();
         List<GoodsBill> result = new LinkedList<>();
         for (GoodsBill goodsBill : list) {
@@ -244,4 +270,21 @@ public class TransferServiceImpl implements ITransferService {
         return customerReceiptInfoDao.findByReceiveGoodsPerson(customerCode, pageable);
     }
 
+    /**
+     * @return com.ansel.bean.TransferComInfo
+     * @description 查询运单的中转详情 中转城市+运单号
+     * @params [goodsBillCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
+    @Override
+    public TransferComInfo findByGoodsBillCodeAndTransferStation(String goodsBillCode, String transferStation) {
+
+        TransferComInfo transferComInfo = new TransferComInfo();
+        //2. TODO 待修改
+        if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation)==null) {
+            transferComInfo = transferComInfoDao.findByCity(transferStation);
+        }
+        return transferComInfo;
+    }
 }

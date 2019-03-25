@@ -32,4 +32,5 @@ public interface ITransferService {
 	
 	public Page<CustomerReceiptInfo> findCusRecPage(String customerCode, Pageable pageable);
 
+	TransferComInfo findByGoodsBillCodeAndTransferStation(String goodsBillCode, String transferStation);
 }

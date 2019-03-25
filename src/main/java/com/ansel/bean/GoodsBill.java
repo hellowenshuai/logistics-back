@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.*;
 import java.sql.Date;
 
 /**
@@ -21,7 +22,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @ToString
 @Entity(name = "goodsbill")
-public class GoodsBill {
+public class GoodsBill implements Cloneable{
 
 	@Id
 	@GeneratedValue(generator = "id")
@@ -74,8 +75,8 @@ public class GoodsBill {
 	@Column(length = 50)
 	private String acceptProcedureRate;
 
-	@Column(length = 50)
-	private String payMode;
+    @Column(length = 50)
+    private String payMode;
 
 	@Column(length = 50)
 	private String fetchGoodsMode;
@@ -128,5 +129,28 @@ public class GoodsBill {
 	@Column(length = 100)
 	private String acceptStation;
 
-
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        // 将对象写到流里
+        ByteArrayOutputStream bo = new ByteArrayOutputStream();
+        ObjectOutputStream oo = null;
+        try {
+            oo = new ObjectOutputStream(bo);
+            oo.writeObject(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 从流里读出来
+        ByteArrayInputStream bi = new ByteArrayInputStream(bo.toByteArray());
+        ObjectInputStream oi = null;
+        try {
+            oi = new ObjectInputStream(bi);
+            return (oi.readObject());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
