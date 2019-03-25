@@ -3,6 +3,7 @@ package com.ansel.service.impl;
 import com.ansel.bean.CallbackInfo;
 import com.ansel.dao.ICallbackDao;
 import com.ansel.service.ICallbackService;
+import com.ansel.util.SendMsgWebChinese;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,12 @@ public class CallbackServiceImpl implements ICallbackService {
     public boolean addInfo(CallbackInfo callbackInfo) {
         try {
             callbackDao.save(callbackInfo);
+            String phone = callbackInfo.getDialNo();
+            String content = callbackInfo.getContent();
+            boolean b = SendMsgWebChinese.SendMsg(phone, content);
+            if (b) {
+                log.info("发件人：" + callbackInfo.getWriter() + "给" + phone + "发" + content + ",回告类型：" + callbackInfo.getType());
+            }
             return true;
         } catch (Exception e) {
             log.error("插入回告失败:" + e.getMessage());
