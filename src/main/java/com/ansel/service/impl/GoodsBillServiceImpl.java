@@ -149,7 +149,18 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
      */
     @Override
     public GoodsBill selectByGoodsBillCode(String goodsBillCode) {
-        return goodsBillDao.findByGoodsBillCode(goodsBillCode);
+        GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
+        String goodsBillCode1 = goodsBill.getGoodsBillCode();
+        String[] transferStation = goodsBill.getTransferStation().split("，");
+
+        //查询他有多少中转回告
+        for (int i = 0; i < transferStation.length; i++) {
+            CallbackInfo callbackInfo = callbackDao.findByGoodsBillIdAndTypeAndTransferStation(goodsBillCode1, "中转回告", transferStation[i]);
+            if (callbackInfo==null) {
+                goodsBill.setTransferStation(transferStation[i]);
+            }
+        }
+        return goodsBill;
     }
 
     /**
@@ -219,7 +230,7 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
 
     /**
      * @return java.util.List<com.ansel.bean.GoodsBill>
-     * @description 查询当前客户下的”未结“的货运单  且有提货通告的货运单
+     * @description 查询当前客户下的”未结“的货运单  且有提货回告的货运单
      * @params [customerCode]
      * @creator chenshuai
      * @date 2019/3/20 0020
@@ -231,7 +242,7 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
         List<GoodsBill> result = new ArrayList<>();
         for (GoodsBill goodsBill : goodsBills) {
             String goodsBillCode = goodsBill.getGoodsBillCode();
-            CallbackInfo callbackInfo = callbackDao.findByGoodsBillIdAndType(goodsBillCode, "到货回告");
+            CallbackInfo callbackInfo = callbackDao.findByGoodsBillIdAndType(goodsBillCode, "提货回告");
             if (null!=callbackInfo) {
                 result.add(goodsBill);
             }

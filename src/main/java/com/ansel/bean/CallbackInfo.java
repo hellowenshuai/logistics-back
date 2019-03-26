@@ -2,13 +2,8 @@ package com.ansel.bean;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.sql.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * @author chenshuai
@@ -23,7 +18,7 @@ import javax.persistence.Id;
 @ToString
 @Entity(name = "callbackinfo")
 public class CallbackInfo {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -35,7 +30,7 @@ public class CallbackInfo {
 	private String type;
 
 	private String content;
-	
+
 	@Column(length = 50)
 	private String goodsBillId;
 
@@ -53,8 +48,12 @@ public class CallbackInfo {
 	@Column(length = 50)
 	private String billId;
 
-	@Column(length = 50)
-	private String billType;
+    @Column(length = 50)
+    private String billType;
+
+    //中转城市
+    @Column(length = 50)
+    private String transferStation;
 
 
 }

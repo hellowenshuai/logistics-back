@@ -101,7 +101,7 @@ public class TransferServiceImpl implements ITransferService {
              * 货运单编号+中转城市，查询出中转记录，说明在数据库中查询不到中转记录，就将数据返回给前端*/
             //如果有多个中转城市，此时以第一个为中转城市
             for (int i = 0; i < citys.length; i++) {
-                if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[i]) == null) {
+                if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[i])==null) {
                     GoodsBill clone = null;
                     try {
                         clone = (GoodsBill) goodsBill.clone();
@@ -128,7 +128,7 @@ public class TransferServiceImpl implements ITransferService {
     public TransferComInfo findByGoodsBillCode(String goodsBillCode) {
 
         GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
-        if (goodsBill == null) {
+        if (goodsBill==null) {
             return null;
         }
         String transferStation = goodsBill.getTransferStation().trim();
@@ -137,7 +137,7 @@ public class TransferServiceImpl implements ITransferService {
         TransferComInfo transferComInfo = new TransferComInfo();
         //TODO 待修改
         for (String city : cityArray) {
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, city) == null) {
+            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, city)==null) {
                 transferComInfo = transferComInfoDao.findByCity(city);
                 break;
             }
@@ -183,24 +183,25 @@ public class TransferServiceImpl implements ITransferService {
                 result.add(list.get(i));
                 continue;
             }
-            // TODO 待修改
+            // TODO 有中转城市的
             List<TransferInfo> transferInfoList = new ArrayList<>();
             String[] cityArray = transferStation1.split("，");
             for (int j = 0; j < cityArray.length; j++) {
-                String transferStation = "%" + cityArray[0] + "%";
+                String transferStation = "%" + cityArray[j] + "%";
                 String goodsBillCode = list.get(i).getGoodsBillCode();
-                log.info("transferStation:" + transferStation);
+                //查询是否有中转回执单
                 TransferInfo transferInfo = transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation);
-                if (transferInfo != null) {
+                if (transferInfo!=null) {
                     transferInfoList.add(transferInfo);
                 }
             }
-            if (transferInfoList.size() == cityArray.length) {
+            //查询是否有中转回告
+            String goodsBillCode = list.get(i).getGoodsBillCode();
+            List<CallbackInfo> callbackInfos = callbackDao.findAllByGoodsBillIdAndType(goodsBillCode, "中转回告");
+            if (transferInfoList.size()==cityArray.length && callbackInfos.size()==cityArray.length) {
                 result.add(list.get(i));
             }
-            log.info("transferInfoList:" + transferInfoList.toString());
         }
-        log.info("result:", result.toArray().toString());
         return result;
     }
 
@@ -222,11 +223,11 @@ public class TransferServiceImpl implements ITransferService {
             List<TransferInfo> transferInfos = transferInfoDao.findByGoodsBillCode(goodsBill.getGoodsBillCode());
             //查有几个中转回告
             List<CallbackInfo> callbackInfos = callbackDao.findAllByGoodsBillIdAndType(goodsBill.getGoodsBillCode(), "中转回告");
-
-            if (transferInfos.size() > 0 && transferInfos.size() > 0 && transferInfos.size() == callbackInfos.size()) {
+            //比较中转城市是否相同，全部相同即放弃，有一个不同，将之展示出来，全不同，就全展示出来
+            //当有一个时，
+            if (transferInfos.size()==1 && callbackInfos.size()==1) {
                 continue;
             }
-
             for (int i = 0; i < transferInfos.size(); i++) {
                 GoodsBill goodsBill12 = (GoodsBill) goodsBill.clone();
                 TransferInfo transferInfo = transferInfos.get(i);
@@ -234,11 +235,18 @@ public class TransferServiceImpl implements ITransferService {
                 goodsBill12.setTransferStation(transferStation);
                 result.add(goodsBill12);
             }
-//            if (transferInfos != null && callbackInfos == null && !"".equals(goodsBill.getTransferStation())) {
-//                result.add(goodsBill);
-//            }
         }
-        return result;
+        //加工，去除重复数据
+        List<GoodsBill> result2 = new LinkedList<>();
+        for (int i = 0; i < result.size(); i++) {
+            GoodsBill goodsBill = (GoodsBill) result.get(i).clone();
+            String transferStation = goodsBill.getTransferStation();
+            CallbackInfo callbackInfo = callbackDao.findByGoodsBillIdAndTypeAndTransferStation(goodsBill.getGoodsBillCode(), "中转回告", transferStation);
+            if (callbackInfo==null) {
+                result2.add(goodsBill);
+            }
+        }
+        return result2;
     }
 
     /**
@@ -297,7 +305,7 @@ public class TransferServiceImpl implements ITransferService {
 
         TransferComInfo transferComInfo = new TransferComInfo();
         //2. TODO 待修改
-        if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation) == null) {
+        if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation)==null) {
             transferComInfo = transferComInfoDao.findByCity(transferStation);
         }
         return transferComInfo;
