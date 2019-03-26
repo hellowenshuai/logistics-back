@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50723
 File Encoding         : 65001
 
-Date: 2019-03-22 01:05:01
+Date: 2019-03-27 01:19:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,9 +25,9 @@ CREATE TABLE `billinfo` (
   `bill_code` varchar(50) DEFAULT NULL,
   `bill_state` varchar(50) DEFAULT NULL,
   `bill_type` varchar(50) DEFAULT NULL,
-  `write_date` datetime(6) DEFAULT NULL,
+  `write_date` timestamp(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='票据查看 货运单使用(单据明细表)';
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='票据查看 货运单使用(单据明细表)';
 
 -- ----------------------------
 -- Records of billinfo
@@ -49,6 +49,32 @@ INSERT INTO `billinfo` VALUES ('18', '上海', 'HZ563217', '已填', '货运回�
 INSERT INTO `billinfo` VALUES ('19', null, 'HY716876', '已填', '货运单', '2019-03-22 00:41:49.910000');
 INSERT INTO `billinfo` VALUES ('20', '杭州', 'HZ333632', '作废', '货运回执单', '2019-03-22 00:45:02.307000');
 INSERT INTO `billinfo` VALUES ('21', '杭州', 'HZ333632', '已填', '货运回执单', '2019-03-22 00:46:26.766000');
+INSERT INTO `billinfo` VALUES ('22', null, 'HY781714', '已填', '货运单', '2019-03-22 20:52:45.277000');
+INSERT INTO `billinfo` VALUES ('23', '杭州', 'HZ625230', '已填', '货运回执单', '2019-03-22 20:54:10.351000');
+INSERT INTO `billinfo` VALUES ('24', null, 'HY505017', '已填', '货运单', '2019-03-22 21:09:22.161000');
+INSERT INTO `billinfo` VALUES ('25', '杭州', 'HZ955358', '已填', '货运回执单', '2019-03-22 21:09:56.192000');
+INSERT INTO `billinfo` VALUES ('26', null, 'HY051928', '已填', '货运单', '2019-03-22 22:32:10.477000');
+INSERT INTO `billinfo` VALUES ('27', '杭州', 'HZ387897', '已填', '货运回执单', '2019-03-22 22:32:41.312000');
+INSERT INTO `billinfo` VALUES ('28', null, 'HY571385', '已填', '货运单', '2019-03-22 22:34:57.525000');
+INSERT INTO `billinfo` VALUES ('29', '杭州', 'HZ216465', '已填', '货运回执单', '2019-03-22 22:35:15.290000');
+INSERT INTO `billinfo` VALUES ('30', null, 'HY686917', '已填', '货运单', '2019-03-23 13:08:21.729000');
+INSERT INTO `billinfo` VALUES ('31', '上海', 'HZ775061', '已填', '货运回执单', '2019-03-23 13:08:51.180000');
+INSERT INTO `billinfo` VALUES ('32', null, 'HY943956', '已填', '货运单', '2019-03-23 15:54:35.343000');
+INSERT INTO `billinfo` VALUES ('33', '杭州', 'HZ694907', '已填', '货运回执单', '2019-03-23 15:55:21.958000');
+INSERT INTO `billinfo` VALUES ('34', null, 'HY438805', '已填', '货运单', '2019-03-24 13:44:23.474000');
+INSERT INTO `billinfo` VALUES ('35', null, 'HY967453', '已填', '货运单', '2019-03-24 13:45:40.848000');
+INSERT INTO `billinfo` VALUES ('36', '杭州', 'HZ007155', '已填', '货运回执单', '2019-03-24 13:48:03.485000');
+INSERT INTO `billinfo` VALUES ('37', '中转两次城市时', 'HZ386765', '已填', '货运回执单', '2019-03-24 15:07:39.993000');
+INSERT INTO `billinfo` VALUES ('38', null, 'HY992038', '已填', '货运单', '2019-03-24 15:11:03.642000');
+INSERT INTO `billinfo` VALUES ('39', '杭州', 'HZ537045', '已填', '货运回执单', '2019-03-24 15:11:44.745000');
+INSERT INTO `billinfo` VALUES ('40', null, 'HY362379', '已填', '货运单', '2019-03-26 22:35:04.698000');
+INSERT INTO `billinfo` VALUES ('41', null, 'HY865117', '已填', '货运单', '2019-03-26 22:37:14.488000');
+INSERT INTO `billinfo` VALUES ('42', '杭州', 'HZ061371', '已填', '货运回执单', '2019-03-26 22:39:13.094000');
+INSERT INTO `billinfo` VALUES ('43', '杭州', 'HZ182401', '已填', '货运回执单', '2019-03-26 22:40:19.103000');
+INSERT INTO `billinfo` VALUES ('44', null, 'HY264944', '已填', '货运单', '2019-03-26 22:43:51.547000');
+INSERT INTO `billinfo` VALUES ('45', null, 'HY381732', '已填', '货运单', '2019-03-26 22:44:40.538000');
+INSERT INTO `billinfo` VALUES ('46', '无锡', 'HZ463666', '已填', '货运回执单', '2019-03-26 22:47:58.931000');
+INSERT INTO `billinfo` VALUES ('47', '常州', 'HZ819399', '已填', '货运回执单', '2019-03-26 22:48:21.949000');
 
 -- ----------------------------
 -- Table structure for billrelease
@@ -63,7 +89,7 @@ CREATE TABLE `billrelease` (
   `receive_bill_time` date DEFAULT NULL,
   `release_person` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='将货运单与司机建立关系(单据分发表)';
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='将货运单与司机建立关系(单据分发表)';
 
 -- ----------------------------
 -- Records of billrelease
@@ -77,6 +103,17 @@ INSERT INTO `billrelease` VALUES ('7', '杭州', 'HY842372', '货运单', 'SJ159
 INSERT INTO `billrelease` VALUES ('10', '杭州', 'HY812216', '货运单', 'SJ065481', '2019-03-17', 'GL846489');
 INSERT INTO `billrelease` VALUES ('11', '上海', 'HY910010', '货运单', 'SJ159922', '2019-03-21', 'GL846489');
 INSERT INTO `billrelease` VALUES ('12', '杭州', 'HY716876', '货运单', 'SJ065481', '2019-03-22', 'GL846489');
+INSERT INTO `billrelease` VALUES ('13', '杭州', 'HY505017', '货运单', 'SJ159922', '2019-03-22', 'SJ065481');
+INSERT INTO `billrelease` VALUES ('15', '杭州', 'HY781714', '货运单', 'SJ159922', '2019-03-22', 'SJ065481');
+INSERT INTO `billrelease` VALUES ('16', '杭州', 'HY051928', '货运单', 'SJ159922', '2019-03-22', 'SJ159922');
+INSERT INTO `billrelease` VALUES ('17', '杭州', 'HY571385', '货运单', 'SJ159922', '2019-03-22', 'SJ159922');
+INSERT INTO `billrelease` VALUES ('18', '上海', 'HY686917', '货运单', 'SJ065481', '2019-03-23', 'PJ111879');
+INSERT INTO `billrelease` VALUES ('19', '杭州', 'HY943956', '货运单', 'SJ159922', '2019-03-23', 'SJ159922');
+INSERT INTO `billrelease` VALUES ('20', '杭州', 'HY992038', '货运单', 'SJ159922', '2019-03-24', 'GL846489');
+INSERT INTO `billrelease` VALUES ('21', '杭州', 'HY865117', '货运单', 'SJ065481', '2019-03-26', 'GL846489');
+INSERT INTO `billrelease` VALUES ('22', '杭州', 'HY362379', '货运单', 'SJ065481', '2019-03-26', 'GL846489');
+INSERT INTO `billrelease` VALUES ('23', '无锡', 'HY264944', '货运单', 'SJ065481', '2019-03-26', 'GL846489');
+INSERT INTO `billrelease` VALUES ('24', '常州', 'HY381732', '货运单', 'SJ065481', '2019-03-26', 'GL846489');
 
 -- ----------------------------
 -- Table structure for callbackinfo
@@ -95,39 +132,61 @@ CREATE TABLE `callbackinfo` (
   `type` varchar(50) DEFAULT NULL,
   `write_time` date DEFAULT NULL,
   `writer` varchar(50) DEFAULT NULL,
+  `transfer_station` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='客服通知发货人，收货人(回告信息表)';
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='客服通知发货人，收货人(回告信息表)';
 
 -- ----------------------------
 -- Records of callbackinfo
 -- ----------------------------
-INSERT INTO `callbackinfo` VALUES ('1', null, null, '客服拨打电话提示收货人', '15893630802', null, 'HY669044', '\0', '\0', '已提回告', '2019-03-10', 'KF936854');
-INSERT INTO `callbackinfo` VALUES ('2', null, null, '客服拨打电话提示发货人', '15893630801', null, 'HY669044', '\0', '\0', '到货回告', '2019-03-10', 'KF936854');
-INSERT INTO `callbackinfo` VALUES ('3', null, null, '大家好，我现在已经到达中转地，一起正常', '15893630801', null, 'HY282907', '\0', '\0', '中转回告', '2019-03-10', 'SJ065481');
-INSERT INTO `callbackinfo` VALUES ('4', null, null, '收件人快来取货了', '15893630802', null, 'HY282907', '\0', '\0', '提货回告', '2019-03-10', 'KF936854');
-INSERT INTO `callbackinfo` VALUES ('5', null, null, '通知发件人 物品已经到达目的地', '15893630801', null, 'HY282907', '\0', '\0', '到货回告', '2019-03-10', 'KF936854');
-INSERT INTO `callbackinfo` VALUES ('6', null, null, '你的快递已经到达', '15893630801', null, 'HY602419', '\0', '\0', '提货回告', '2019-03-10', 'KF936854');
-INSERT INTO `callbackinfo` VALUES ('7', null, null, '你的快递已经到达目的地', '15893630802', null, 'HY602419', '\0', '\0', '到货回告', '2019-03-10', 'KF936854');
-INSERT INTO `callbackinfo` VALUES ('8', null, null, '收件人快到取货', '15893630801', null, 'HY812216', '\0', '\0', '提货回告', '2019-03-19', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('9', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY812216', '\0', '\0', '到货回告', '2019-03-19', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('11', null, null, '测试调用方法', '15893630801', null, 'HY050568', '\0', '\0', '中转回告', '2019-03-19', 'KH385751');
-INSERT INTO `callbackinfo` VALUES ('12', null, null, '交易完成', '15893630801', null, 'HY812216', '\0', '\0', '已提回告', '2019-03-19', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('13', null, null, '交易完成', '15893630801', null, 'HY842372', '\0', '\0', '已提回告', '2019-03-19', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('14', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY842372', '\0', '\0', '到货回告', '2019-03-19', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('15', null, null, '收件人快到取货', '15893630801', null, 'HY842372', '\0', '\0', '提货回告', '2019-03-19', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('17', null, null, '收件人快到取货', '15893630801', null, 'HY770674', '\0', '\0', '中转回告', '2019-03-19', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('18', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY050568', '\0', '\0', '到货回告', '2019-03-21', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('19', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY770674', '\0', '\0', '到货回告', '2019-03-21', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('20', null, null, '收件人快到取货', '15893630801', null, 'HY050568', '\0', '\0', '提货回告', '2019-03-21', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('21', null, null, '收件人快到取货', '15893630802', null, 'HY770674', '\0', '\0', '提货回告', '2019-03-21', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('22', null, null, '收件人取货完成', '15893630801', null, 'HY050568', '\0', '\0', '已提回告', '2019-03-21', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('23', null, null, '你的快件已到达，请收货', '15893630801', null, 'HY910010', '\0', '\0', '提货回告', '2019-03-22', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('24', null, null, '你的快件已到达，请放心', '15893630801', null, 'HY910010', '\0', '\0', '到货回告', '2019-03-22', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('25', null, null, '已经提走货物', '15893630801', null, 'HY910010', '\0', '\0', '已提回告', '2019-03-22', 'KH385751');
-INSERT INTO `callbackinfo` VALUES ('26', null, null, '中转完成', '15893630801', null, 'HY716876', '\0', '\0', '中转回告', '2019-03-22', 'SJ065481');
-INSERT INTO `callbackinfo` VALUES ('27', null, null, '中转完成', '15893630801', null, 'HY716876', '\0', '\0', '提货回告', '2019-03-22', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('28', null, null, '收件人快到取货', '15893630801', null, 'HY716876', '\0', '\0', '到货回告', '2019-03-22', 'KF743008');
-INSERT INTO `callbackinfo` VALUES ('29', null, null, '', '15893630801', null, 'HY716876', '\0', '\0', '已提回告', '2019-03-22', 'KH823675');
+INSERT INTO `callbackinfo` VALUES ('1', null, null, '客服拨打电话提示收货人', '15893630802', null, 'HY669044', '\0', '\0', '已提回告', '2019-03-10', 'KF936854', null);
+INSERT INTO `callbackinfo` VALUES ('2', null, null, '客服拨打电话提示发货人', '15893630801', null, 'HY669044', '\0', '\0', '到货回告', '2019-03-10', 'KF936854', null);
+INSERT INTO `callbackinfo` VALUES ('3', null, null, '大家好，我现在已经到达中转地，一起正常', '15893630801', null, 'HY282907', '\0', '\0', '中转回告', '2019-03-10', 'SJ065481', null);
+INSERT INTO `callbackinfo` VALUES ('4', null, null, '收件人快来取货了', '15893630802', null, 'HY282907', '\0', '\0', '提货回告', '2019-03-10', 'KF936854', null);
+INSERT INTO `callbackinfo` VALUES ('5', null, null, '通知发件人 物品已经到达目的地', '15893630801', null, 'HY282907', '\0', '\0', '到货回告', '2019-03-10', 'KF936854', null);
+INSERT INTO `callbackinfo` VALUES ('6', null, null, '你的快递已经到达', '15893630801', null, 'HY602419', '\0', '\0', '提货回告', '2019-03-10', 'KF936854', null);
+INSERT INTO `callbackinfo` VALUES ('7', null, null, '你的快递已经到达目的地', '15893630802', null, 'HY602419', '\0', '\0', '到货回告', '2019-03-10', 'KF936854', null);
+INSERT INTO `callbackinfo` VALUES ('8', null, null, '收件人快到取货', '15893630801', null, 'HY812216', '\0', '\0', '提货回告', '2019-03-19', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('9', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY812216', '\0', '\0', '到货回告', '2019-03-19', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('11', null, null, '测试调用方法', '15893630801', null, 'HY050568', '\0', '\0', '中转回告', '2019-03-19', 'KH385751', null);
+INSERT INTO `callbackinfo` VALUES ('12', null, null, '交易完成', '15893630801', null, 'HY812216', '\0', '\0', '已提回告', '2019-03-19', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('13', null, null, '交易完成', '15893630801', null, 'HY842372', '\0', '\0', '已提回告', '2019-03-19', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('14', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY842372', '\0', '\0', '到货回告', '2019-03-19', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('15', null, null, '收件人快到取货', '15893630801', null, 'HY842372', '\0', '\0', '提货回告', '2019-03-19', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('17', null, null, '收件人快到取货', '15893630801', null, 'HY770674', '\0', '\0', '中转回告', '2019-03-19', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('18', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY050568', '\0', '\0', '到货回告', '2019-03-21', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('19', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY770674', '\0', '\0', '到货回告', '2019-03-21', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('20', null, null, '收件人快到取货', '15893630801', null, 'HY050568', '\0', '\0', '提货回告', '2019-03-21', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('21', null, null, '收件人快到取货', '15893630802', null, 'HY770674', '\0', '\0', '提货回告', '2019-03-21', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('22', null, null, '收件人取货完成', '15893630801', null, 'HY050568', '\0', '\0', '已提回告', '2019-03-21', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('23', null, null, '你的快件已到达，请收货', '15893630801', null, 'HY910010', '\0', '\0', '提货回告', '2019-03-22', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('24', null, null, '你的快件已到达，请放心', '15893630801', null, 'HY910010', '\0', '\0', '到货回告', '2019-03-22', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('25', null, null, '已经提走货物', '15893630801', null, 'HY910010', '\0', '\0', '已提回告', '2019-03-22', 'KH385751', null);
+INSERT INTO `callbackinfo` VALUES ('26', null, null, '中转完成', '15893630801', null, 'HY716876', '\0', '\0', '中转回告', '2019-03-22', 'SJ065481', null);
+INSERT INTO `callbackinfo` VALUES ('27', null, null, '中转完成', '15893630801', null, 'HY716876', '\0', '\0', '提货回告', '2019-03-22', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('28', null, null, '收件人快到取货', '15893630801', null, 'HY716876', '\0', '\0', '到货回告', '2019-03-22', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('29', null, null, '', '15893630801', null, 'HY716876', '\0', '\0', '已提回告', '2019-03-22', 'KH823675', null);
+INSERT INTO `callbackinfo` VALUES ('30', null, null, '中转完成', '15893630801', null, 'HY051928', '\0', '\0', '中转回告', '2019-03-23', 'SJ159922', null);
+INSERT INTO `callbackinfo` VALUES ('31', null, null, '中转完成', '15893630801', null, 'HY571385', '\0', '\0', '中转回告', '2019-03-23', 'SJ159922', null);
+INSERT INTO `callbackinfo` VALUES ('32', null, null, '快件到达中转城市 苏州，请悉知', '15893630801', null, 'HY686917', '\0', '\0', '中转回告', '2019-03-23', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('33', null, null, '收件人快到取货', '15893630801', null, 'HY686917', '\0', '\0', '提货回告', '2019-03-23', 'KH385751', null);
+INSERT INTO `callbackinfo` VALUES ('34', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY686917', '\0', '\0', '到货回告', '2019-03-23', 'KH385751', null);
+INSERT INTO `callbackinfo` VALUES ('35', null, null, '收件人快到取货', '15893630801', null, 'HY686917', '\0', '\0', '已提回告', '2019-03-23', 'KH385751', null);
+INSERT INTO `callbackinfo` VALUES ('36', null, null, '收件人快到取货', '15893630801', null, 'HY505017', '\0', '\0', '到货回告', '2019-03-23', 'KH823675', null);
+INSERT INTO `callbackinfo` VALUES ('37', null, null, '收件人快到取货', '15893630801', null, 'HY781714', '\0', '\0', '到货回告', '2019-03-23', 'KH823675', null);
+INSERT INTO `callbackinfo` VALUES ('38', null, null, '经过两次中转，已经到达目的地，请发货方悉知！', '15893630801', null, 'HY992038', '\0', '\0', '到货回告', '2019-03-25', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('39', null, null, '收件人快到取货', '15893630801', null, 'HY992038', '\0', '\0', '提货回告', '2019-03-25', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('40', null, null, '收件人快到取货', '15893630801', null, 'HY505017', '\0', '\0', '提货回告', '2019-03-25', 'KF743008', null);
+INSERT INTO `callbackinfo` VALUES ('41', null, null, '第一次中转完成，到达常州', '15893630801', null, 'HY362379', '\0', '\0', '中转回告', '2019-03-26', 'KF743008', '常州');
+INSERT INTO `callbackinfo` VALUES ('42', null, null, '到达第一家中转城市', '15893630801', null, 'HY362379', '\0', '\0', '中转回告', '2019-03-26', 'KF743008', '无锡');
+INSERT INTO `callbackinfo` VALUES ('43', null, null, '到达第一家中转城市', '15893630801', null, 'HY865117', '\0', '\0', '中转回告', '2019-03-26', 'KF743008', '常州');
+INSERT INTO `callbackinfo` VALUES ('44', null, null, '第二次中转无锡到达', '15893630801', null, 'HY865117', '\0', '\0', '中转回告', '2019-03-27', 'KF743008', '无锡');
+INSERT INTO `callbackinfo` VALUES ('45', null, null, '收件人快到取货', '15893630801', null, 'HY362379', '\0', '\0', '提货回告', '2019-03-27', 'KF743008', '常州，无锡');
+INSERT INTO `callbackinfo` VALUES ('46', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY362379', '\0', '\0', '到货回告', '2019-03-27', 'KF743008', '常州，无锡');
+INSERT INTO `callbackinfo` VALUES ('47', null, null, '交易完成', '15893630801', null, 'HY362379', '\0', '\0', '已提回告', '2019-03-27', 'KH823675', '常州，无锡');
+INSERT INTO `callbackinfo` VALUES ('48', null, null, '收件人快到取货', '15893630801', null, 'HY865117', '\0', '\0', '提货回告', '2019-03-27', 'KF743008', '无锡，常州');
+INSERT INTO `callbackinfo` VALUES ('49', null, null, '发件人的货已经到达目的地', '15893630801', null, 'HY865117', '\0', '\0', '到货回告', '2019-03-27', 'KF743008', '无锡，常州');
+INSERT INTO `callbackinfo` VALUES ('50', null, null, '交易完成', '15893630801', null, 'HY865117', '\0', '\0', '已提回告', '2019-03-27', 'KF743008', '无锡，常州');
 
 -- ----------------------------
 -- Table structure for carcost
@@ -210,15 +269,28 @@ CREATE TABLE `cargoreceipt` (
 -- ----------------------------
 -- Records of cargoreceipt
 -- ----------------------------
-INSERT INTO `cargoreceipt` VALUES ('HZ128709', '上海', '1000', '2019-03-19', '已结合同', '现金', '0', '0', '0', '杭州', '0', 'SJ159922', null, '0', '15893630801', '上海', '杭州', '杭州陈1科技公司', '测试添加运输单失败', '2019-03-17', '200', '2019-03-17');
+INSERT INTO `cargoreceipt` VALUES ('HZ007155', '杭州', '50000', null, '未出合同', '现金', '现金', '500', '500', '上海', '200', null, null, '200', '15893630801', '杭州', '上海', '上海第一公司', '测试中转城市自动生成', '2019-03-24', '2000', null);
+INSERT INTO `cargoreceipt` VALUES ('HZ061371', '杭州', '50000', '2019-03-27', '未结合同', '现金', '现金', '500', '500', '上海', '200', 'SJ065481', null, '200', '15893630801', '杭州', '上海', '上海第一公司', '', '2019-03-26', '2000', '2019-03-26');
+INSERT INTO `cargoreceipt` VALUES ('HZ128709', '上海', '1000', '2019-03-30', '已结合同', '现金', '0', '0', '0', '杭州', '0', 'SJ159922', null, '0', '15893630801', '上海', '杭州', '杭州陈1科技公司', '测试添加运输单失败', '2019-03-17', '200', '2019-03-17');
 INSERT INTO `cargoreceipt` VALUES ('HZ171436', '杭州', '1000', '2019-03-10', '已结合同', '现金', '随便', '500', '200', '上海', '20', 'SJ065481', null, '200', '15893630802', '杭州', '上海', '上海陈2科技公司', '现金结算', '2019-03-10', '200', '2019-03-10');
+INSERT INTO `cargoreceipt` VALUES ('HZ182401', '杭州', '50000', '2019-03-27', '未结合同', '现金', '现金', '500', '500', '上海', '200', 'SJ065481', null, '200', '15893630801', '杭州', '上海', '上海第一公司', '', '2019-03-26', '2000', '2019-03-26');
+INSERT INTO `cargoreceipt` VALUES ('HZ216465', '杭州', '50000', '2019-03-23', '已结合同', '现金', '现金', '500', '500', '上海', '200', 'SJ159922', null, '200', '15893630801', '杭州', '上海', '上海第一公司', '', '2019-03-22', '2000', '2019-03-22');
 INSERT INTO `cargoreceipt` VALUES ('HZ333632', '杭州', '11', '2019-03-22', '已结合同', '1', '1', '1', '1', '上海', '1', 'SJ065481', null, '1', '15893630801', '杭州', '上海', '上海第一公司', '1', '2019-03-22', '1', '2019-03-22');
+INSERT INTO `cargoreceipt` VALUES ('HZ386765', '中转两次城市时', '50000', null, '未出合同', '现金', '现金', '500', '500', '上海', '200', null, null, '200', '15893630801', '杭州', '上海', '上海第一公司', '', '2019-03-24', '2000', null);
+INSERT INTO `cargoreceipt` VALUES ('HZ387897', '杭州', '50000', null, '未到车辆', '现金', '现金', '500', '500', '上海', '200', 'SJ159922', null, '200', '15893630801', '杭州', '上海', '上海第一公司', '', '2019-03-22', '2000', '2019-03-22');
 INSERT INTO `cargoreceipt` VALUES ('HZ421544', '上海', '2000', '2019-03-21', '已结合同', '现金', '现金', '0', '0', '杭州', '0', 'SJ065481', null, '0', '15893630801', '上海', '上海', '上海第一公司', '0', '2019-03-17', '200', '2019-03-17');
+INSERT INTO `cargoreceipt` VALUES ('HZ463666', '无锡', '50000', null, '未到车辆', '现金', '现金', '500', '500', '上海', '200', 'SJ065481', null, '200', '15893630801', '无锡', '上海', '上海第一公司', '', '2019-03-26', '2000', '2019-03-26');
 INSERT INTO `cargoreceipt` VALUES ('HZ528643', '杭州', '5000', '2019-03-21', '已结合同', '现金', '批发', '0', '0', '上海', '0', 'SJ065481', null, '0', '15893630802', '杭州', '上海', '上海陈2科技公司', '测试回告问题', '2019-03-10', '800', '2019-03-11');
+INSERT INTO `cargoreceipt` VALUES ('HZ537045', '杭州', '50000', '2019-03-25', '未结合同', '现金', '现金', '500', '500', '上海', '200', 'SJ159922', null, '200', '15893630801', '杭州', '上海', '上海第一公司', '杭州-无锡-常州-苏州-上海', '2019-03-24', '2000', '2019-03-24');
 INSERT INTO `cargoreceipt` VALUES ('HZ563217', '上海', '2000', '2019-03-22', '已结合同', '现金', '批量', '200', '200', '杭州', '500', 'SJ159922', null, '200', '15893630801', '上海', '杭州', '杭州陈1科技公司', '测试整个流程', '2019-03-21', '500', '2019-03-21');
+INSERT INTO `cargoreceipt` VALUES ('HZ625230', '杭州', '20000', '2019-03-23', '未结合同', '现金', '批量', '0', '0', '上海', '0', 'SJ159922', null, '0', '15893630801', '杭州', '上海', '上海第一公司', '测试 无中转城市的情况', '2019-03-22', '2000', '2019-03-22');
+INSERT INTO `cargoreceipt` VALUES ('HZ694907', '杭州', '50000', null, '未到车辆', '现金', '现金', '500', '500', '上海', '200', 'SJ159922', null, '200', '15893630801', '杭州', '上海', '上海第一公司', '', '2019-03-23', '2000', '2019-03-23');
 INSERT INTO `cargoreceipt` VALUES ('HZ738738', '杭州', '0', '2019-03-17', '已结合同', '现金', '0', '0', '0', '上海', '0', 'SJ065481', null, '0', '15893630801', '杭州', '上海', '上海第一公司', '无', '2019-03-17', '20', '2019-03-17');
 INSERT INTO `cargoreceipt` VALUES ('HZ742133', '杭州', '2000', '2019-03-10', '已结合同', '现金', '无', '0', '0', '上海', '0', 'SJ065481', null, '0', '15893630802', '杭州', '上海', '上海陈2科技公司', '第二个运输单', '2019-03-10', '0', '2019-03-10');
+INSERT INTO `cargoreceipt` VALUES ('HZ775061', '上海', '50000', '2019-03-23', '已结合同', '现金', '现金', '500', '500', '杭州', '200', 'SJ065481', null, '200', '15893630801', '上海', '杭州', '杭州陈1科技公司', '', '2019-03-23', '2000', '2019-03-23');
+INSERT INTO `cargoreceipt` VALUES ('HZ819399', '常州', '50000', null, '未到车辆', '现金', '现金', '500', '500', '上海', '200', 'SJ065481', null, '200', '15893630801', '常州', '上海', '上海第一公司', '', '2019-03-26', '2000', '2019-03-26');
 INSERT INTO `cargoreceipt` VALUES ('HZ831013', '上海', '0', '2019-03-10', '已结合同', '现金', '0', '0', '0', '杭州', '0', 'SJ159922', null, '0', '15893630801', '上海', '杭州', '杭州陈1科技公司', '测试 第三次', '2019-03-10', '0', '2019-03-10');
+INSERT INTO `cargoreceipt` VALUES ('HZ955358', '杭州', '50000', '2019-03-23', '未结合同', '现金', '现金', '500', '500', '上海', '200', 'SJ159922', null, '200', '15893630801', '杭州', '上海', '上海第一公司', '对比测试', '2019-03-22', '2000', '2019-03-22');
 
 -- ----------------------------
 -- Table structure for cargoreceiptdetail
@@ -239,15 +311,28 @@ CREATE TABLE `cargoreceiptdetail` (
 -- ----------------------------
 -- Records of cargoreceiptdetail
 -- ----------------------------
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ007155', 'HY967453', '50000', '20', '立方', '20/m³', '20', '20');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ061371', 'HY362379', '50000', '20', '立方', '20/m³', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ128709', 'HY842372', '20', '20', '20', '20', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ171436', 'HY669044', '20000', '200', '重量', '随机', '3', '2.5');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ182401', 'HY865117', '50000', '20', '立方', '20/m³', '20', '20');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ216465', 'HY571385', '50000', '20', '立方', '20/m³', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ333632', 'HY716876', '0', '20', '00', '0', '0', '0');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ386765', 'HY438805', '50000', '20', '立方', '20/m³', '20', '20');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ387897', 'HY051928', '50000', '20', '立方', '20/m³', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ421544', 'HY050568', '2000', '20', '20', '2', '20', '20');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ463666', 'HY264944', '50000', '20', '立方', '20/m³', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ528643', 'HY770674', '5000', '50', '50', '50', '50', '50');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ537045', 'HY992038', '50000', '20', '立方', '20/m³', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ563217', 'HY910010', '20000', '500', '批量', '立方', '100', '100');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ625230', 'HY781714', '50000', '50', '50', '50', '50', '50');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ694907', 'HY943956', '50000', '20', '立方', '20/m³', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ738738', 'HY812216', '52', '20', '20', '202', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ742133', 'HY282907', '2000', '20', '20', '20', '20', '20');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ775061', 'HY686917', '50000', '20', '立方', '20/m³', '20', '20');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ819399', 'HY381732', '50000', '20', '立方', '20/m³', '20', '20');
 INSERT INTO `cargoreceiptdetail` VALUES ('HZ831013', 'HY602419', '20', '20', '210', '20', '20', '20');
+INSERT INTO `cargoreceiptdetail` VALUES ('HZ955358', 'HY505017', '50000', '20', '立方', '20/m³', '20', '20');
 
 -- ----------------------------
 -- Table structure for cityexpand
@@ -258,13 +343,15 @@ CREATE TABLE `cityexpand` (
   `city_id` int(11) NOT NULL,
   `range_city` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='起始城市和目的城市关系表(城市扩充表)';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='起始城市和目的城市关系表(城市扩充表)';
 
 -- ----------------------------
 -- Records of cityexpand
 -- ----------------------------
-INSERT INTO `cityexpand` VALUES ('3', '6', '5,7,4,2');
-INSERT INTO `cityexpand` VALUES ('5', '7', '4,6');
+INSERT INTO `cityexpand` VALUES ('3', '6', '4,2');
+INSERT INTO `cityexpand` VALUES ('5', '7', '2');
+INSERT INTO `cityexpand` VALUES ('8', '2', '4');
+INSERT INTO `cityexpand` VALUES ('10', '4', '6');
 
 -- ----------------------------
 -- Table structure for compensationinfo
@@ -332,9 +419,9 @@ CREATE TABLE `contactsservice` (
 -- ----------------------------
 -- Records of contactsservice
 -- ----------------------------
-INSERT INTO `contactsservice` VALUES ('上海第一公司', '0', '0', '2000', 'HY842372', '0', '0', '杭州', '0', '上海', '2019-03-17 00:00:00.000000');
+INSERT INTO `contactsservice` VALUES ('上海第一公司', '0', '0', '20000', 'HY910010', '500', '300', '杭州中南国际', '300', '上海徐家汇', '2019-03-21 00:00:00.000000');
 INSERT INTO `contactsservice` VALUES ('上海陈2科技公司', '0', '0', '0', 'HY602419', '0', '0', '杭州', '0', '上海', '2019-03-10 00:00:00.000000');
-INSERT INTO `contactsservice` VALUES ('杭州陈1科技公司', '0', '0', '2', 'HY812216', '2', '0', '上海', '0', '杭州', '2019-03-17 00:00:00.000000');
+INSERT INTO `contactsservice` VALUES ('杭州陈1科技公司', '0', '0', '200', 'HY992038', '200', '0', '上海', '0', '杭州', '2019-03-24 00:00:00.000000');
 
 -- ----------------------------
 -- Table structure for customeramount
@@ -351,9 +438,9 @@ CREATE TABLE `customeramount` (
 -- ----------------------------
 -- Records of customeramount
 -- ----------------------------
-INSERT INTO `customeramount` VALUES ('上海第一公司', '22000', '500', '2');
+INSERT INTO `customeramount` VALUES ('上海第一公司', '22200', '700', '3');
 INSERT INTO `customeramount` VALUES ('上海陈2科技公司', '0', '0', '1');
-INSERT INTO `customeramount` VALUES ('杭州陈1科技公司', '6502', '202', '5');
+INSERT INTO `customeramount` VALUES ('杭州陈1科技公司', '12902', '1602', '14');
 
 -- ----------------------------
 -- Table structure for customerbillclear
@@ -381,13 +468,18 @@ CREATE TABLE `customerbillclear` (
 -- ----------------------------
 INSERT INTO `customerbillclear` VALUES ('HY050568', 'KH385751', '0', '2019-03-21', '结入', '200', '20', '20', '0', '180', '0', '0', '180');
 INSERT INTO `customerbillclear` VALUES ('HY282907', 'KH385751', '0', '2019-03-10', '结入', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `customerbillclear` VALUES ('HY505017', 'KH385751', '0', null, '结入', '0', '0', '200', '200', '0', '0', '0', '0');
+INSERT INTO `customerbillclear` VALUES ('HY571385', 'KH385751', '0', '2019-03-23', '结入', '0', '0', '200', '200', '200', '0', '0', '200');
 INSERT INTO `customerbillclear` VALUES ('HY602419', 'KH693381', '0', '2019-03-10', '结入', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `customerbillclear` VALUES ('HY669044', 'KH385751', '0', '2019-03-10', '结入', '2000', '200', '200', '200', '2000', '200', '0', '2000');
+INSERT INTO `customerbillclear` VALUES ('HY686917', 'KH823675', '0', null, '结入', '0', '0', '200', '200', '0', '0', '0', '0');
 INSERT INTO `customerbillclear` VALUES ('HY716876', 'KH385751', '0', null, '结入', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `customerbillclear` VALUES ('HY770674', 'KH385751', '0', '2019-03-21', '结入', '0', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `customerbillclear` VALUES ('HY781714', 'KH385751', '0', null, '结入', '0', '0', '20', '0', '0', '0', '0', '0');
 INSERT INTO `customerbillclear` VALUES ('HY812216', 'KH385751', '0', '2019-03-21', '结入', '0', '2', '2', '2', '0', '0', '0', '0');
 INSERT INTO `customerbillclear` VALUES ('HY842372', 'KH823675', '0', '2019-03-19', '结入', '0', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `customerbillclear` VALUES ('HY910010', 'KH823675', '0', '2019-03-22', '结入', '0', '200', '200', '500', '300', '0', '0', '300');
+INSERT INTO `customerbillclear` VALUES ('HY992038', 'KH385751', '0', null, '结入', '0', '0', '200', '200', '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for customerinfo
@@ -412,6 +504,8 @@ CREATE TABLE `customerinfo` (
 -- ----------------------------
 -- Records of customerinfo
 -- ----------------------------
+INSERT INTO `customerinfo` VALUES ('KH070961', '无锡UUUU街道', '无锡第二公司', '大型', '15893630801@163.com', '私人', '20-99', '93630801', '无锡xx', '15893630801', '15893630801', '630801');
+INSERT INTO `customerinfo` VALUES ('KH283642', '常州xxxx街道', '常州第一客户', '大型', '15893630801@163.com', '私人', '20-99', '93630801', '常州赵子龙', '15893630801', '15893630801', '630801');
 INSERT INTO `customerinfo` VALUES ('KH385751', '杭州', '杭州陈1科技公司', '大客户', 'chen1@163.com', '私人', '200-999', '93630801', '陈1', '15893630801', '15893630801', '936308');
 INSERT INTO `customerinfo` VALUES ('KH823675', '上海', '上海第一公司', '大型', '15893630801@163.com', '私人', '20-99', '93630801', '上海一哥', '15893630801', '15893630801', '630801');
 
@@ -428,7 +522,7 @@ CREATE TABLE `customerreceiptinfo` (
   `receive_goods_date` date DEFAULT NULL,
   `receive_goods_person` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='客户回执表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='客户回执表';
 
 -- ----------------------------
 -- Records of customerreceiptinfo
@@ -438,6 +532,11 @@ INSERT INTO `customerreceiptinfo` VALUES ('2', '0', '安全到货', '杭州陈1�
 INSERT INTO `customerreceiptinfo` VALUES ('3', '0', '安全到货', '上海第一公司', 'HY050568', '2019-03-21', 'KH823675');
 INSERT INTO `customerreceiptinfo` VALUES ('4', '0', '已确认收货', '杭州陈1科技公司', 'HY910010', '2019-03-22', 'KH385751');
 INSERT INTO `customerreceiptinfo` VALUES ('5', '0', '', '上海第一公司', 'HY716876', '2019-03-22', 'KH823675');
+INSERT INTO `customerreceiptinfo` VALUES ('6', '0', '已确认收货', '杭州陈1科技公司', 'HY686917', '2019-03-23', 'KH385751');
+INSERT INTO `customerreceiptinfo` VALUES ('7', '0', '安全到货', '上海第一公司', 'HY505017', '2019-03-25', 'KH823675');
+INSERT INTO `customerreceiptinfo` VALUES ('8', '0', '安全到货', '上海第一公司', 'HY781714', '2019-03-25', 'KH823675');
+INSERT INTO `customerreceiptinfo` VALUES ('9', '0', '已确认收货', '上海第一公司', 'HY362379', '2019-03-27', 'KH823675');
+INSERT INTO `customerreceiptinfo` VALUES ('10', '0', '安全到货', '上海第一公司', 'HY865117', '2019-03-27', 'KH823675');
 
 -- ----------------------------
 -- Table structure for driveramount
@@ -454,8 +553,8 @@ CREATE TABLE `driveramount` (
 -- ----------------------------
 -- Records of driveramount
 -- ----------------------------
-INSERT INTO `driveramount` VALUES ('SJ065481', '0', '200', '5');
-INSERT INTO `driveramount` VALUES ('SJ159922', '0', '0', '2');
+INSERT INTO `driveramount` VALUES ('SJ065481', '200', '300', '7');
+INSERT INTO `driveramount` VALUES ('SJ159922', '700', '5200', '7');
 
 -- ----------------------------
 -- Table structure for driverclear
@@ -483,13 +582,18 @@ CREATE TABLE `driverclear` (
 -- ----------------------------
 INSERT INTO `driverclear` VALUES ('HZ128709', '200', '-800', '2019-03-21', '结出', '0', '200', '0', 'SJ159922', '0', '200', '1200', '200');
 INSERT INTO `driverclear` VALUES ('HZ171436', '0', '-800', '2019-03-10', '结出', '200', '200', '20', 'SJ065481', '200', '2000', '1200', '200');
+INSERT INTO `driverclear` VALUES ('HZ216465', '500', '-45000', '2019-03-23', '结出', '500', '5000', '200', 'SJ159922', '200', '0', '51000', '2000');
 INSERT INTO `driverclear` VALUES ('HZ333632', '0', '-11', '2019-03-22', '结出', '1', '0', '1', 'SJ065481', '1', '0', '12', '1');
 INSERT INTO `driverclear` VALUES ('HZ421544', '200', '-1900', '2019-03-21', '结出', '0', '100', '0', 'SJ065481', '0', '0', '2200', '200');
 INSERT INTO `driverclear` VALUES ('HZ528643', '0', '-5000', '2019-03-21', '结出', '0', '0', '0', 'SJ065481', '0', '5000', '5000', '800');
+INSERT INTO `driverclear` VALUES ('HZ537045', '0', '0', null, '结出', '500', '0', '200', 'SJ159922', '200', '0', '0', '2000');
 INSERT INTO `driverclear` VALUES ('HZ563217', '0', '-2000', '2019-03-22', '结出', '200', '0', '500', 'SJ159922', '200', '0', '2200', '500');
+INSERT INTO `driverclear` VALUES ('HZ625230', '0', '0', null, '结出', '0', '0', '0', 'SJ159922', '0', '0', '0', '2000');
 INSERT INTO `driverclear` VALUES ('HZ738738', '0', '0', '2019-03-21', '结出', '0', '0', '0', 'SJ065481', '0', '1200', '0', '20');
 INSERT INTO `driverclear` VALUES ('HZ742133', '0', '-2000', '2019-03-10', '结出', '0', '0', '0', 'SJ065481', '0', '0', '2000', '0');
+INSERT INTO `driverclear` VALUES ('HZ775061', '0', '-50000', null, '结出', '500', '0', '200', 'SJ065481', '200', '0', '50500', '2000');
 INSERT INTO `driverclear` VALUES ('HZ831013', '0', '0', '2019-03-10', '结出', '0', '0', '0', 'SJ159922', '0', '0', '0', '0');
+INSERT INTO `driverclear` VALUES ('HZ955358', '0', '0', null, '结出', '500', '0', '200', 'SJ159922', '200', '0', '0', '2000');
 
 -- ----------------------------
 -- Table structure for driverinfo
@@ -551,7 +655,6 @@ INSERT INTO `employee` VALUES ('CW943338', '1989-03-10', '财务组', '财务1',
 INSERT INTO `employee` VALUES ('GL081838', '2019-03-14', '管理组', '测试随机数', '男', '经理');
 INSERT INTO `employee` VALUES ('KF743008', '2019-03-19', '客服组', '客服1号', '男', '助理');
 INSERT INTO `employee` VALUES ('PJ111879', '2019-03-10', '票据组', '票据组1姐', '女', '助理');
-INSERT INTO `employee` VALUES ('PJ595668', '2019-03-14', '票据组', '测试随机id', '男', '经理');
 
 -- ----------------------------
 -- Table structure for employeeuser
@@ -605,11 +708,12 @@ CREATE TABLE `extraclear` (
   `remark` varchar(50) DEFAULT NULL,
   `subject_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of extraclear
 -- ----------------------------
+INSERT INTO `extraclear` VALUES ('1', '2019-03-23', '500', '结出', '老板洗车', '洗车费');
 
 -- ----------------------------
 -- Table structure for extraincome
@@ -655,7 +759,7 @@ CREATE TABLE `functionwithgroup` (
   `function_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='权限功能和用户组关系表（多对多）';
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='权限功能和用户组关系表（多对多）';
 
 -- ----------------------------
 -- Records of functionwithgroup
@@ -674,19 +778,12 @@ INSERT INTO `functionwithgroup` VALUES ('11', '11', '1');
 INSERT INTO `functionwithgroup` VALUES ('12', '4', '7');
 INSERT INTO `functionwithgroup` VALUES ('13', '5', '7');
 INSERT INTO `functionwithgroup` VALUES ('14', '7', '4');
-INSERT INTO `functionwithgroup` VALUES ('15', '7', '6');
 INSERT INTO `functionwithgroup` VALUES ('16', '1', '2');
 INSERT INTO `functionwithgroup` VALUES ('17', '2', '2');
 INSERT INTO `functionwithgroup` VALUES ('18', '3', '2');
-INSERT INTO `functionwithgroup` VALUES ('19', '7', '2');
-INSERT INTO `functionwithgroup` VALUES ('20', '1', '7');
-INSERT INTO `functionwithgroup` VALUES ('21', '2', '7');
-INSERT INTO `functionwithgroup` VALUES ('22', '3', '7');
-INSERT INTO `functionwithgroup` VALUES ('23', '7', '7');
 INSERT INTO `functionwithgroup` VALUES ('24', '6', '3');
 INSERT INTO `functionwithgroup` VALUES ('25', '9', '3');
 INSERT INTO `functionwithgroup` VALUES ('26', '8', '5');
-INSERT INTO `functionwithgroup` VALUES ('27', '9', '5');
 INSERT INTO `functionwithgroup` VALUES ('28', '4', '6');
 
 -- ----------------------------
@@ -761,14 +858,27 @@ CREATE TABLE `goodsbill` (
 -- Records of goodsbill
 -- ----------------------------
 INSERT INTO `goodsbill` VALUES ('HY050568', '1.5', '杭州', '2000', '20', 'GL846489', '2019-03-21', '实地', '2000', '', '\0', '0', '0', '0', '现金', '2019-03-17', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '20', '00', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-17', '0', '', '', 'GL846489', '2019-03-17');
+INSERT INTO `goodsbill` VALUES ('HY051928', '1.5', '杭州', '200', '200', 'SJ159922', null, '实地', '5000', '\0', '\0', '200', '0', '0', '现金', '2019-03-30', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '测试有中转城市的情况', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-22', '200', '无锡', '\0', 'SJ159922', '2019-03-22');
+INSERT INTO `goodsbill` VALUES ('HY264944', '1.5', '无锡', '200', '200', 'GL846489', null, '实地', '5000', '', '\0', '200', '0', '0', '现金', null, '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '没有中转', '杭州', '无锡第二公司', '无锡UUUU街道', 'KH070961', '15893630801', '2019-03-26', '0', '', '', 'GL846489', '2019-03-26');
 INSERT INTO `goodsbill` VALUES ('HY282907', '1.2', '杭州', '2000', '0', 'GL846489', '2019-03-10', '实地', '2000', '\0', '\0', '0', '0', '0', '现金', '2019-03-10', '上海', '上海陈2科技公司', '上海', 'KH693381', '15893630802', '0', '0', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-10', '1.3', '苏州', '\0', 'GL846489', '2019-03-10');
+INSERT INTO `goodsbill` VALUES ('HY362379', '1.5', '杭州', '200', '200', 'GL846489', '2019-03-27', '实地', '5000', '', '\0', '200', '0', '0', '现金', '2019-03-29', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '有2个中转城市', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-26', '2.6', '常州，无锡', '', 'GL846489', '2019-03-26');
+INSERT INTO `goodsbill` VALUES ('HY381732', '1.5', '常州', '200', '200', 'GL846489', null, '实地', '5000', '', '\0', '200', '0', '0', '现金', null, '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '1次中转', '常州', '常州第一客户', '常州xxxx街道', 'KH283642', '15893630801', '2019-03-26', '1.3', '无锡', '', 'GL846489', '2019-03-26');
+INSERT INTO `goodsbill` VALUES ('HY438805', '1.5', '杭州', '200', '200', 'GL846489', null, '实地', '5000', '', '\0', '200', '0', '0', '现金', '2019-03-24', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '杭州出发，测试中转城市是否自动生成', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-24', '1.3', '常州', '', 'GL846489', '2019-03-24');
+INSERT INTO `goodsbill` VALUES ('HY505017', '1.5', '杭州', '200', '200', 'PJ111879', '2019-03-23', '实地', '5000', '', '\0', '200', '0', '0', '现金', '2019-03-30', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '测试没有中转地', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-23', '0', '', '', 'PJ111879', '2019-03-22');
+INSERT INTO `goodsbill` VALUES ('HY571385', '1.5', '杭州', '200', '200', 'SJ159922', '2019-03-23', '实地', '5000', '\0', '\0', '200', '0', '0', '现金', '2019-03-30', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '测试有两个中转城市', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-22', '0', '常州，无锡', '\0', 'SJ159922', '2019-03-22');
 INSERT INTO `goodsbill` VALUES ('HY602419', '1.5', '上海', '0', '0', 'GL846489', '2019-03-10', '实地', '2000', '', '\0', '0', '0', '0', '现金', '2019-03-10', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '0', '第三次测试 司机验货之后，客户可以填写回告单', '上海', '上海陈2科技公司', '上海', 'KH693381', '15893630802', '2019-03-10', '1.3', '', '', 'GL846489', '2019-03-10');
 INSERT INTO `goodsbill` VALUES ('HY669044', '1.5', '杭州', '2000', '200', 'GL846489', '2019-03-10', '实地', '2000', '', '\0', '200', '0', '200', '现金', '2019-03-13', '上海', '上海陈2科技公司', '上海', 'KH693381', '15893630802', '200', '第一个客户', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-10', '1.3', '', '', 'GL846489', '2019-03-10');
+INSERT INTO `goodsbill` VALUES ('HY686917', '1.5', '上海', '200', '200', 'PJ111879', '2019-03-23', '实地', '5000', '', '\0', '200', '0', '0', '现金', '2019-03-23', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '0', '测试 中转城市添加后的状态', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '2019-03-23', '0', '苏州，常州', '', 'PJ111879', '2019-03-23');
 INSERT INTO `goodsbill` VALUES ('HY716876', '0', '00', '0', '0', 'GL846489', '2019-03-22', '00', '2000', '\0', '\0', '0', '0', '0', '00', '2019-03-22', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '0', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-22', '0', '无锡', '\0', 'GL846489', '2019-03-22');
 INSERT INTO `goodsbill` VALUES ('HY770674', '1.5', '杭州', '500', '0', 'PJ111879', '2019-03-21', '实地', '5000', '', '\0', '0', '0', '0', '现金', '2019-03-10', '上海', '上海陈2科技公司', '上海', 'KH693381', '15893630802', '0', '填写一个货运单', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-10', '1.3', '', '', 'PJ111879', '2019-03-10');
+INSERT INTO `goodsbill` VALUES ('HY781714', '1.5', '杭州', '5000', '20', 'PJ111879', '2019-03-23', '实地', '2000', '', '\0', '0', '0', '0', '现金', '2019-03-22', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '测试没有中转城市的流程', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-22', '0', '', '', 'PJ111879', '2019-03-22');
 INSERT INTO `goodsbill` VALUES ('HY812216', '20', '20', '2', '2', 'GL846489', '2019-03-17', '2', '20', '', '\0', '2', '0', '0', '20', '2019-03-17', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '2', '0', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-17', '0', '', '', 'GL846489', '2019-03-17');
 INSERT INTO `goodsbill` VALUES ('HY842372', '1.5', '上海', '2000', '0', 'GL846489', '2019-03-19', '实地', '200', '', '\0', '0', '0', '0', '现金', '2019-03-20', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '0', '0', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '2019-03-17', '1.3', '', '', 'GL846489', '2019-03-17');
+INSERT INTO `goodsbill` VALUES ('HY865117', '1.5', '杭州', '200', '200', 'GL846489', '2019-03-27', '实地', '5000', '', '\0', '200', '0', '0', '现金', '2019-03-28', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '2个中转城市', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-26', '2.6', '无锡，常州', '', 'GL846489', '2019-03-26');
 INSERT INTO `goodsbill` VALUES ('HY910010', '1.5', '上海', '20000', '200', 'GL846489', '2019-03-22', '实地', '2000', '\0', '\0', '500', '0', '0', '现金', '2019-03-27', '杭州中南国际', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '200', '测试功能流程', '上海徐家汇', '上海第一公司', '上海', 'KH823675', '15893630801', '2019-03-21', '0', '常州，镇江，无锡', '\0', 'GL846489', '2019-03-21');
+INSERT INTO `goodsbill` VALUES ('HY943956', '1.5', '杭州', '200', '200', 'SJ159922', null, '实地', '5000', '\0', '\0', '200', '0', '0', '现金', '2019-03-27', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '测试具体中转城市的流程', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-23', '0', '无锡', '\0', 'SJ159922', '2019-03-23');
+INSERT INTO `goodsbill` VALUES ('HY967453', '1.5', '杭州', '200', '200', 'GL846489', null, '实地', '5000', '', '\0', '200', '0', '0', '现金', '2019-03-30', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '测试中转城市是否自动计算', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-24', '1.3', '无锡，常州', '', 'GL846489', '2019-03-24');
+INSERT INTO `goodsbill` VALUES ('HY992038', '1.5', '杭州', '200', '200', 'GL846489', '2019-03-25', '实地', '5000', '', '\0', '200', '0', '0', '现金', '2019-03-24', '上海', '上海第一公司', '上海', 'KH823675', '15893630801', '0', '杭州-上海 有两次中转', '杭州', '杭州陈1科技公司', '杭州', 'KH385751', '15893630801', '2019-03-24', '2.6', '常州，无锡', '', 'GL846489', '2019-03-24');
 
 -- ----------------------------
 -- Table structure for goodsbillevent
@@ -786,14 +896,27 @@ CREATE TABLE `goodsbillevent` (
 -- Records of goodsbillevent
 -- ----------------------------
 INSERT INTO `goodsbillevent` VALUES ('HY050568', '已结运单', '2019-03-21 00:22:34.695000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY051928', '未到', '2019-03-22 22:33:38.967000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY264944', '未到', '2019-03-26 22:51:04.739000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY282907', '已结运单', '2019-03-10 17:59:13.792000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY362379', '未结', '2019-03-27 00:41:28.382000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY381732', '未到', '2019-03-26 22:51:17.572000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY438805', '待发', '2019-03-24 13:44:23.482000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY505017', '未结', '2019-03-23 19:03:35.540000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY571385', '已结运单', '2019-03-23 15:57:06.484000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY602419', '已结运单', '2019-03-10 18:39:34.782000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY669044', '已结运单', '2019-03-10 16:57:35.550000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY686917', '已结运单', '2019-03-23 13:27:45.286000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY716876', '已结运单', '2019-03-22 00:49:35.159000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY770674', '已结运单', '2019-03-21 00:22:38.925000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY781714', '未结', '2019-03-23 19:03:42.823000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY812216', '已结运单', '2019-03-17 19:26:40.638000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY842372', '已结运单', '2019-03-19 22:07:57.653000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY865117', '未结', '2019-03-27 01:06:39.102000', '单据已填');
 INSERT INTO `goodsbillevent` VALUES ('HY910010', '已结运单', '2019-03-22 00:14:45.470000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY943956', '未到', '2019-03-23 15:55:39.396000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY967453', '待发', '2019-03-24 13:45:40.886000', '单据已填');
+INSERT INTO `goodsbillevent` VALUES ('HY992038', '未结', '2019-03-25 21:35:14.920000', '单据已填');
 
 -- ----------------------------
 -- Table structure for goodsreceiptinfo
@@ -807,7 +930,7 @@ CREATE TABLE `goodsreceiptinfo` (
   `rceive_goods_date` date DEFAULT NULL,
   `receive_goods_person` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='货物回执信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='货物回执信息表';
 
 -- ----------------------------
 -- Records of goodsreceiptinfo
@@ -821,6 +944,13 @@ INSERT INTO `goodsreceiptinfo` VALUES ('6', '安全到货', '张三', 'HZ421544'
 INSERT INTO `goodsreceiptinfo` VALUES ('7', '安全到货', '张三', 'HZ528643', '2019-03-21', '上海陈2科技公司');
 INSERT INTO `goodsreceiptinfo` VALUES ('8', '安全到货', '李四', 'HZ563217', '2019-03-22', '杭州陈1科技公司');
 INSERT INTO `goodsreceiptinfo` VALUES ('9', '安全到货', '张三', 'HZ333632', '2019-03-22', '上海第一公司');
+INSERT INTO `goodsreceiptinfo` VALUES ('10', '已经经过苏州 到达州', '张三', 'HZ775061', '2019-03-23', '杭州陈1科技公司');
+INSERT INTO `goodsreceiptinfo` VALUES ('11', '到达上海', '李四', 'HZ216465', '2019-03-23', '上海第一公司');
+INSERT INTO `goodsreceiptinfo` VALUES ('12', '安全到货', '李四', 'HZ955358', '2019-03-23', '上海第一公司');
+INSERT INTO `goodsreceiptinfo` VALUES ('13', '到达上海', '李四', 'HZ625230', '2019-03-23', '上海第一公司');
+INSERT INTO `goodsreceiptinfo` VALUES ('14', '经过两次中转，终于抵达上海', '李四', 'HZ537045', '2019-03-25', '上海第一公司');
+INSERT INTO `goodsreceiptinfo` VALUES ('15', '已确认收货', '张三', 'HZ061371', '2019-03-27', '上海第一公司');
+INSERT INTO `goodsreceiptinfo` VALUES ('16', '安全到货', '张三', 'HZ182401', '2019-03-27', '上海第一公司');
 
 -- ----------------------------
 -- Table structure for incomemonthlytemp
@@ -853,7 +983,7 @@ CREATE TABLE `incomemonthlytemp` (
 -- ----------------------------
 -- Records of incomemonthlytemp
 -- ----------------------------
-INSERT INTO `incomemonthlytemp` VALUES ('1', '500', '13412', '500', '13011', '0', '2000', '10000', '513412', '401', '20000', '2019-03', '5000', '2000', '58100', '1000', '455312', '500000', '32600', '2000');
+INSERT INTO `incomemonthlytemp` VALUES ('1', '500', '435012', '500', '433011', '0', '2000', '10000', '935012', '2001', '20000', '2019-03', '5000', '2000', '58100', '1000', '876912', '500000', '32600', '2000');
 
 -- ----------------------------
 -- Table structure for lineoverall
@@ -872,8 +1002,8 @@ CREATE TABLE `lineoverall` (
 -- ----------------------------
 -- Records of lineoverall
 -- ----------------------------
-INSERT INTO `lineoverall` VALUES ('1', '12000', '上海', '220', '杭州', '6');
-INSERT INTO `lineoverall` VALUES ('2', '3000', '杭州', '0', '上海', '3');
+INSERT INTO `lineoverall` VALUES ('1', '378011', '上海', '1601', '杭州', '13');
+INSERT INTO `lineoverall` VALUES ('2', '55000', '杭州', '400', '上海', '5');
 
 -- ----------------------------
 -- Table structure for managefee
@@ -918,13 +1048,18 @@ CREATE TABLE `proxyfeeclear` (
 -- ----------------------------
 INSERT INTO `proxyfeeclear` VALUES ('HY050568', '0', null, '1', '0', 'KH385751', '2000', '2000', '0');
 INSERT INTO `proxyfeeclear` VALUES ('HY282907', '0', null, '0.02', '0', 'KH385751', '2000', '-2000', '0');
+INSERT INTO `proxyfeeclear` VALUES ('HY505017', '0', null, '0.02', '0', 'KH385751', '5000', '-5000', '0');
+INSERT INTO `proxyfeeclear` VALUES ('HY571385', '0', null, '0.02', '0', 'KH385751', '5000', '-5000', '0');
 INSERT INTO `proxyfeeclear` VALUES ('HY602419', '0', '2019-03-10', '0.02', '39.99999910593033', 'KH693381', '2000', '-2000', '0');
 INSERT INTO `proxyfeeclear` VALUES ('HY669044', '0', null, '0.02', '0', 'KH385751', '2000', '-2000', '0');
+INSERT INTO `proxyfeeclear` VALUES ('HY686917', '0', '2019-03-23', '0.02', '0', 'KH823675', '5000', '-5000', '99.99999776482582');
 INSERT INTO `proxyfeeclear` VALUES ('HY716876', '0', '2019-03-22', '1', '0', 'KH385751', '2000', '2000', '2000');
 INSERT INTO `proxyfeeclear` VALUES ('HY770674', '0', null, '0.02', '0', 'KH385751', '5000', '-5000', '0');
+INSERT INTO `proxyfeeclear` VALUES ('HY781714', '0', null, '0.02', '0', 'KH385751', '2000', '-2000', '0');
 INSERT INTO `proxyfeeclear` VALUES ('HY812216', '0', null, '0.02', '0', 'KH385751', '20', '-20', '0');
 INSERT INTO `proxyfeeclear` VALUES ('HY842372', '0', null, '0.02', '0', 'KH823675', '200', '-200', '0');
 INSERT INTO `proxyfeeclear` VALUES ('HY910010', '0', '2019-03-22', '0.02', '39.99999910593033', 'KH823675', '2000', '-2000', '0');
+INSERT INTO `proxyfeeclear` VALUES ('HY992038', '0', null, '0.02', '0', 'KH385751', '5000', '-5000', '0');
 
 -- ----------------------------
 -- Table structure for region
@@ -964,16 +1099,16 @@ CREATE TABLE `routeinfo` (
 -- ----------------------------
 -- Records of routeinfo
 -- ----------------------------
-INSERT INTO `routeinfo` VALUES ('1', '100', '5', '1', '', '6');
-INSERT INTO `routeinfo` VALUES ('2', '200', '4', '2', '7', '6');
-INSERT INTO `routeinfo` VALUES ('3', '100', '7', '1', '', '6');
-INSERT INTO `routeinfo` VALUES ('4', '100', '4', '1', '', '6');
-INSERT INTO `routeinfo` VALUES ('5', '100', '2', '1', '', '6');
-INSERT INTO `routeinfo` VALUES ('6', '100', '4', '1', '', '7');
-INSERT INTO `routeinfo` VALUES ('7', '200', '5', '2', '6', '7');
-INSERT INTO `routeinfo` VALUES ('8', '200', '4', '2', '6', '7');
-INSERT INTO `routeinfo` VALUES ('9', '200', '2', '2', '6', '7');
-INSERT INTO `routeinfo` VALUES ('10', '100', '6', '1', '', '7');
+INSERT INTO `routeinfo` VALUES ('1', '200', '6', '2', '4', '2');
+INSERT INTO `routeinfo` VALUES ('2', '100', '4', '1', '', '2');
+INSERT INTO `routeinfo` VALUES ('3', '200', '2', '2', '6', '4');
+INSERT INTO `routeinfo` VALUES ('4', '100', '6', '1', '', '4');
+INSERT INTO `routeinfo` VALUES ('5', '100', '4', '1', '', '6');
+INSERT INTO `routeinfo` VALUES ('6', '200', '4', '2', '2', '6');
+INSERT INTO `routeinfo` VALUES ('7', '100', '2', '1', '', '6');
+INSERT INTO `routeinfo` VALUES ('8', '300', '6', '3', '2,4', '7');
+INSERT INTO `routeinfo` VALUES ('9', '200', '4', '2', '2', '7');
+INSERT INTO `routeinfo` VALUES ('10', '100', '2', '1', '', '7');
 
 -- ----------------------------
 -- Table structure for sentlist
@@ -1042,7 +1177,7 @@ CREATE TABLE `transferinfo` (
   `transfer_station` varchar(50) DEFAULT NULL,
   `transfer_station_tel` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='中转信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='中转信息表';
 
 -- ----------------------------
 -- Records of transferinfo
@@ -1050,6 +1185,16 @@ CREATE TABLE `transferinfo` (
 INSERT INTO `transferinfo` VALUES ('1', 'HY282907', '2019-03-10', '现在到达中转目的地，苏州，请大家放心，一切正常', 'HY282907', '苏州', 'SJ065481', '苏州第一公司', '1.3', '苏州', '15893630801');
 INSERT INTO `transferinfo` VALUES ('2', 'HY910010', '2019-03-22', '11', 'HY910010', '松江区', 'SJ159922', '常州第二公司', '1.3', '常州', '15893630801');
 INSERT INTO `transferinfo` VALUES ('3', 'HY716876', '2019-03-22', '11', 'HY716876', '无锡江干区', 'SJ065481', '无锡第一公司', '1.3', '无锡', '15893630801');
+INSERT INTO `transferinfo` VALUES ('4', 'HY571385', '2019-03-22', '已经到达常州', 'HY571385', '松江区', 'SJ159922', '常州第二公司', '1.3', '常州', '15893630801');
+INSERT INTO `transferinfo` VALUES ('5', 'HY051928', '2019-03-22', '已经到达无锡', 'HY051928', '无锡江干区', 'SJ159922', '无锡第一公司', '1.3', '无锡', '15893630801');
+INSERT INTO `transferinfo` VALUES ('6', 'HY686917', '2019-03-23', '已经到达苏州', 'HY686917', '苏州', 'SJ065481', '苏州第一公司', '1.3', '苏州', '15893630801');
+INSERT INTO `transferinfo` VALUES ('7', 'HY943956', '2019-03-23', '这个订单测试收货方应该是看不到的', 'HY943956', '无锡江干区', 'SJ159922', '无锡第一公司', '1.3', '无锡', '15893630801');
+INSERT INTO `transferinfo` VALUES ('8', 'HY992038', '2019-03-25', '到达第一中转城市 无锡', 'HY992038', '无锡江干区', 'SJ159922', '无锡第一公司', '1.3', '无锡', '15893630801');
+INSERT INTO `transferinfo` VALUES ('9', 'HY992038', '2019-03-25', '到达第二中转城市 常州', 'HY992038', '松江区', 'SJ159922', '常州第二公司', '1.3', '常州', '15893630801');
+INSERT INTO `transferinfo` VALUES ('10', 'HY362379', '2019-03-26', '已经到达常州', 'HY362379', '松江区', 'SJ065481', '常州第二公司', '1.3', '常州', '15893630801');
+INSERT INTO `transferinfo` VALUES ('11', 'HY362379', '2019-03-26', '到达第一中转城市 无锡', 'HY362379', '无锡江干区', 'SJ065481', '无锡第一公司', '1.3', '无锡', '15893630801');
+INSERT INTO `transferinfo` VALUES ('12', 'HY865117', '2019-03-26', '到达第一中转城市 常州', 'HY865117', '松江区', 'SJ065481', '常州第二公司', '1.3', '常州', '15893630801');
+INSERT INTO `transferinfo` VALUES ('13', 'HY865117', '2019-03-26', '到达第二中转城市 无锡', 'HY865117', '无锡江干区', 'SJ065481', '无锡第一公司', '1.3', '无锡', '15893630801');
 
 -- ----------------------------
 -- Table structure for user
@@ -1066,13 +1211,13 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('CW943338', '', 'E10ADC3949BA59ABBE56E057F20F883E');
-INSERT INTO `user` VALUES ('GL081838', '\0', 'E10ADC3949BA59ABBE56E057F20F883E');
 INSERT INTO `user` VALUES ('GL846489', '', '81DC9BDB52D04DC20036DBD8313ED055');
 INSERT INTO `user` VALUES ('KF743008', '', 'E10ADC3949BA59ABBE56E057F20F883E');
+INSERT INTO `user` VALUES ('KH070961', '\0', 'E10ADC3949BA59ABBE56E057F20F883E');
+INSERT INTO `user` VALUES ('KH283642', '\0', 'E10ADC3949BA59ABBE56E057F20F883E');
 INSERT INTO `user` VALUES ('KH385751', '', 'E10ADC3949BA59ABBE56E057F20F883E');
 INSERT INTO `user` VALUES ('KH823675', '', 'E10ADC3949BA59ABBE56E057F20F883E');
 INSERT INTO `user` VALUES ('PJ111879', '', 'E10ADC3949BA59ABBE56E057F20F883E');
-INSERT INTO `user` VALUES ('PJ595668', '\0', 'E10ADC3949BA59ABBE56E057F20F883E');
 INSERT INTO `user` VALUES ('SJ065481', '', 'E10ADC3949BA59ABBE56E057F20F883E');
 INSERT INTO `user` VALUES ('SJ159922', '', 'E10ADC3949BA59ABBE56E057F20F883E');
 
@@ -1107,7 +1252,7 @@ CREATE TABLE `userwithgroup` (
   `group_id` int(11) NOT NULL,
   `user_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户和用户组关系表（多对多）';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户和用户组关系表（多对多）';
 
 -- ----------------------------
 -- Records of userwithgroup
@@ -1119,6 +1264,7 @@ INSERT INTO `userwithgroup` VALUES ('4', '6', 'KH385751');
 INSERT INTO `userwithgroup` VALUES ('7', '3', 'CW943338');
 INSERT INTO `userwithgroup` VALUES ('9', '2', 'PJ111879');
 INSERT INTO `userwithgroup` VALUES ('10', '1', 'GL081838');
-INSERT INTO `userwithgroup` VALUES ('11', '2', 'PJ595668');
 INSERT INTO `userwithgroup` VALUES ('12', '6', 'KH823675');
 INSERT INTO `userwithgroup` VALUES ('13', '4', 'KF743008');
+INSERT INTO `userwithgroup` VALUES ('14', '6', 'KH283642');
+INSERT INTO `userwithgroup` VALUES ('15', '6', 'KH070961');
