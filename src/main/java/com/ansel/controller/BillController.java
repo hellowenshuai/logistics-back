@@ -59,7 +59,7 @@ public class BillController extends ReturnType {
 
         Pageable pageable = PageRequest.of(pageNum - 1, limit);
         Page<BillInfo> page = billService.findAllByPage(pageable);
-        Result result = new Result(200, "SUCCESS", page.getNumberOfElements(), page.getContent());
+        Result result = new Result(200, "SUCCESS", (int) page.getTotalElements(), page.getContent());
         return result;
 
     }
