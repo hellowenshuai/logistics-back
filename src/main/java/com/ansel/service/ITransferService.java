@@ -24,7 +24,7 @@ public interface ITransferService {
 	
 	public boolean addTransferInfo(TransferInfo transferInfo);
 	
-	public List<GoodsBill> findOnWayBills();
+	public List<GoodsBill> findOnWayBills()throws Exception;
 	
 	public Page<TransferInfo> findInfoByPage(Pageable pageable);
 	

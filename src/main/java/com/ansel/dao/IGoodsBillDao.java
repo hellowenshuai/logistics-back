@@ -37,7 +37,7 @@ public interface IGoodsBillDao extends JpaRepository<GoodsBill, Long> {
 	public List<GoodsBill> transferState(String type, String driverId);
 	
 	// 查询有中转情况的未到货物
-	@Query(value = "select * from logistics.goodsbill where goods_bill_code in (select goods_bill_id from goodsbillevent where event_name = '未到') and transfer_station is not null", nativeQuery = true)
+	@Query(value = "select * from logistics.goodsbill where goods_bill_code in (select goods_bill_id from goodsbillevent where event_name = '未到') and transfer_station NOT LIKE ''", nativeQuery = true)
 	public List<GoodsBill> findOnWayBills();
 	
 	// 查询某种状态下的货物回告

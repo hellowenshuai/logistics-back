@@ -87,7 +87,7 @@ public class TransferServiceImpl implements ITransferService {
         for (GoodsBill goodsBillx : list) {
             GoodsBill goodsBill = null;
             try {
-                goodsBill = (GoodsBill)goodsBillx.clone();
+                goodsBill = (GoodsBill) goodsBillx.clone();
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
@@ -101,15 +101,16 @@ public class TransferServiceImpl implements ITransferService {
              * 货运单编号+中转城市，查询出中转记录，说明在数据库中查询不到中转记录，就将数据返回给前端*/
             //如果有多个中转城市，此时以第一个为中转城市
             for (int i = 0; i < citys.length; i++) {
-                if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[i])==null) {
-                    goodsBill.setTransferStation(citys[i]);
-                    goodsBill.setGoodsBillCode(goodsBill.getGoodsBillCode());
-                    result.add(goodsBill);
-                    GoodsBill goodsBill1 = new GoodsBill();
-                    goodsBill1.setGoodsBillCode(goodsBill.getGoodsBillCode());
-                    goodsBill1.setTransferStation(goodsBill.getTransferStation());
-                    goodsBill1.setRemark(goodsBill.getRemark());
-                    log.info("goodsBill1:" + goodsBill1);
+                if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBill.getGoodsBillCode(), citys[i]) == null) {
+                    GoodsBill clone = null;
+                    try {
+                        clone = (GoodsBill) goodsBill.clone();
+                        clone.setTransferStation(citys[i]);
+                        clone.setGoodsBillCode(goodsBill.getGoodsBillCode());
+                    } catch (Exception e) {
+                        log.error("e:", e);
+                    }
+                    result.add(clone);
                 }
             }
         }
@@ -127,7 +128,7 @@ public class TransferServiceImpl implements ITransferService {
     public TransferComInfo findByGoodsBillCode(String goodsBillCode) {
 
         GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
-        if (goodsBill==null) {
+        if (goodsBill == null) {
             return null;
         }
         String transferStation = goodsBill.getTransferStation().trim();
@@ -136,7 +137,7 @@ public class TransferServiceImpl implements ITransferService {
         TransferComInfo transferComInfo = new TransferComInfo();
         //TODO 待修改
         for (String city : cityArray) {
-            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, city)==null) {
+            if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, city) == null) {
                 transferComInfo = transferComInfoDao.findByCity(city);
                 break;
             }
@@ -190,11 +191,11 @@ public class TransferServiceImpl implements ITransferService {
                 String goodsBillCode = list.get(i).getGoodsBillCode();
                 log.info("transferStation:" + transferStation);
                 TransferInfo transferInfo = transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation);
-                if (transferInfo!=null) {
+                if (transferInfo != null) {
                     transferInfoList.add(transferInfo);
                 }
             }
-            if (transferInfoList.size()==cityArray.length) {
+            if (transferInfoList.size() == cityArray.length) {
                 result.add(list.get(i));
             }
             log.info("transferInfoList:" + transferInfoList.toString());
@@ -211,17 +212,31 @@ public class TransferServiceImpl implements ITransferService {
      * @date 2019/3/20 0020
      */
     @Override
-    public List<GoodsBill> findOnWayBills() {
-// TODO 待修改
+    public List<GoodsBill> findOnWayBills() throws Exception {
+        // TODO 待修改
         List<GoodsBill> list = goodsBillDao.findOnWayBills();
         List<GoodsBill> result = new LinkedList<>();
         for (GoodsBill goodsBill : list) {
-            //查询司机 1.有中转信息而 2.无回告的 3.中转城市不为空的 哪些运单
-            TransferInfo transferInfo = transferInfoDao.findByGoodsBillCode(goodsBill.getGoodsBillCode());
-            CallbackInfo callbackInfo = callbackDao.findByGoodsBillIdAndType(goodsBill.getGoodsBillCode(), "中转回告");
-            if (transferInfo!=null && callbackInfo==null && !"".equals(goodsBill.getTransferStation())) {
-                result.add(goodsBill);
+            //查询司机 3.中转城市不为空的,1.有中转信息而 2.无回告的  哪些运单  当有多个中转城市时，会有多个中转回告
+            //某个货运单有多个中转城市回执单
+            List<TransferInfo> transferInfos = transferInfoDao.findByGoodsBillCode(goodsBill.getGoodsBillCode());
+            //查有几个中转回告
+            List<CallbackInfo> callbackInfos = callbackDao.findAllByGoodsBillIdAndType(goodsBill.getGoodsBillCode(), "中转回告");
+
+            if (transferInfos.size() > 0 && transferInfos.size() > 0 && transferInfos.size() == callbackInfos.size()) {
+                continue;
             }
+
+            for (int i = 0; i < transferInfos.size(); i++) {
+                GoodsBill goodsBill12 = (GoodsBill) goodsBill.clone();
+                TransferInfo transferInfo = transferInfos.get(i);
+                String transferStation = transferInfo.getTransferStation();
+                goodsBill12.setTransferStation(transferStation);
+                result.add(goodsBill12);
+            }
+//            if (transferInfos != null && callbackInfos == null && !"".equals(goodsBill.getTransferStation())) {
+//                result.add(goodsBill);
+//            }
         }
         return result;
     }
@@ -282,7 +297,7 @@ public class TransferServiceImpl implements ITransferService {
 
         TransferComInfo transferComInfo = new TransferComInfo();
         //2. TODO 待修改
-        if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation)==null) {
+        if (transferInfoDao.findByGoodsBillCodeAndTransferStationContaining(goodsBillCode, transferStation) == null) {
             transferComInfo = transferComInfoDao.findByCity(transferStation);
         }
         return transferComInfo;

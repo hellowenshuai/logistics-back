@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,8 +101,8 @@ public class TransferController extends ReturnType {
     @RequestMapping(value = "/detail/{goodsBillCode}", method = RequestMethod.GET)
     public TransferComInfo detail(@PathVariable("goodsBillCode") String goodsBillCode,
                                   @RequestParam("transferStation") String transferStation) {
-        System.out.println("transferStation:"+transferStation);
-        TransferComInfo transferComInfo = transferService.findByGoodsBillCodeAndTransferStation(goodsBillCode,transferStation);
+        System.out.println("transferStation:" + transferStation);
+        TransferComInfo transferComInfo = transferService.findByGoodsBillCodeAndTransferStation(goodsBillCode, transferStation);
         return transferComInfo;
 
     }
@@ -109,7 +110,12 @@ public class TransferController extends ReturnType {
     @ApiOperation(value = "中转回告所需数据")
     @RequestMapping(value = "/findOnWayBills", method = RequestMethod.GET)
     public Result findOnWayBills() {
-        List<GoodsBill> list = transferService.findOnWayBills();
+        List<GoodsBill> list = new ArrayList<>();
+        try {
+            list = transferService.findOnWayBills();
+        } catch (Exception e) {
+            e.getMessage();
+        }
         Result result = new Result(200, "SUCCESS", list.size(), list);
         return result;
 
