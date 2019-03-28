@@ -75,6 +75,9 @@ public class MoniterServiceImpl implements IMoniterService {
             //4.5
             CargoReceiptDetail cargoReceiptDetail = cargoReceiptDetailDao.findByGoodsBillDetailId(goodsBill.getGoodsBillCode());
             log.info("cargoReceiptDetail:" + cargoReceiptDetail);
+            if (cargoReceiptDetail==null){
+                continue;
+            }
             //4.6
             CargoReceipt cargoReceipt = cargoReceiptDao.findByGoodsRevertBillCode(cargoReceiptDetail.getGoodsRevertBillId());
             log.info("cargoReceipt:" + cargoReceipt);
@@ -117,6 +120,9 @@ public class MoniterServiceImpl implements IMoniterService {
         for (GoodsBill goodsBill : goodsBills) {
             // 4.5
             CargoReceiptDetail cargoReceiptDetail = cargoReceiptDetailDao.findByGoodsBillDetailId(goodsBill.getGoodsBillCode());
+            if (cargoReceiptDetail==null) {
+                continue;
+            }
             // 4.6
             CargoReceipt cargoReceipt = cargoReceiptDao.findByGoodsRevertBillCode(cargoReceiptDetail.getGoodsRevertBillId());
             if (cargoReceipt==null) {
@@ -246,7 +252,8 @@ public class MoniterServiceImpl implements IMoniterService {
     public List<LineOverall> printAllLineOverall() {
         //当你不再需要该表时， 用 drop；当你仍要保留该表，但要删除所有记录时，
         // 用 truncate；当你要删除部分记录时（always with a WHERE clause), 用 delete.
-        lineOverallDao.truncateTable();
+        log.info("打印专线整体开始：");
+//        lineOverallDao.truncateTable();
 
         List<Object[]> strings = cargoReceiptDao.find();
         List<LineOverall> lineOveralls = new ArrayList<>();
