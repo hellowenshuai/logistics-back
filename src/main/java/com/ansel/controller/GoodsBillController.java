@@ -95,7 +95,7 @@ public class GoodsBillController extends ReturnType {
 	@ApiOperation(value = "通过id查询单个货运单")
 	@RequestMapping(value = "/selectByCode/{goodsBillCode}", method = RequestMethod.GET)
 	public GoodsBill selectGoodsBillByCode(@PathVariable("goodsBillCode") String goodsBillCode) {
-		GoodsBill goodsBill = goodsBillService.selectByGoodsBillCode(goodsBillCode);
+		GoodsBill goodsBill = goodsBillService.selectByGoodsBillCode1(goodsBillCode);
 		return goodsBill;
 	}
 	

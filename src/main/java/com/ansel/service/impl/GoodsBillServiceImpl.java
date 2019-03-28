@@ -142,6 +142,18 @@ public class GoodsBillServiceImpl implements IGoodsBillService {
 
     /**
      * @return com.ansel.bean.GoodsBill
+     * @description 通过id查询单个货运单  接货管理使用
+     * @params [goodsBillCode]
+     * @creator chenshuai
+     * @date 2019/3/20 0020
+     */
+    @Override
+    public GoodsBill selectByGoodsBillCode1(String goodsBillCode) {
+        GoodsBill goodsBill = goodsBillDao.findByGoodsBillCode(goodsBillCode);
+        return goodsBill;
+    }
+    /**
+     * @return com.ansel.bean.GoodsBill
      * @description 通过id查询单个货运单
      * @params [goodsBillCode]
      * @creator chenshuai

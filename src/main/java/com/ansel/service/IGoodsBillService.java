@@ -21,7 +21,10 @@ public interface IGoodsBillService {
 	public Page<GoodsBillEvent> selectGoodsBillByEvent(String eventName, Pageable pageable);
 	
 	public GoodsBill selectByGoodsBillCode(String goodsBillCode);
-	
+
+
+	public GoodsBill selectByGoodsBillCode1(String goodsBillCode);
+
 	public boolean update(GoodsBill goodsBill);
 	
 	public boolean delete(String goodsBillCode);
