@@ -31,7 +31,7 @@ public class ContactsService {
 	private String sendGoodsCustomer;// 发货客户
 	
 	@Column(length = 50)
-	private String goodsBillCode;// 货运单编�?
+	private String goodsBillCode;// 货运单编号
 	
 	@Column(length = 50)
 	private String sendGoodsAddr;// 发货地址
@@ -40,8 +40,8 @@ public class ContactsService {
 	private String receiveGoodsAddr;// 收货地址
 	
 	private double carriage;// 运费
-	private double insurance;// 保险�?
-	private double billMoney;// 实际总运�?
+	private double insurance;// 保险费
+	private double billMoney;// 实际总运费
 	private double moneyReceivable;// 应收金额
 	private double receivedMoney;// 已收金额
 	private double balance;// 余额

@@ -45,11 +45,11 @@ public class CarCost {
 	@Column(length = 50)
 	private String goodsHeight;// 载物高度
 	
-	private double carryFeeTotal;// 承运费�?�计
+	private double carryFeeTotal;// 承运费总计
 	
-	private double addCarriageTotal;// 加运费�?�计
+	private double addCarriageTotal;// 加运费总计
 	
-	private double factCarriageTotal;// 实际总运�?
+	private double factCarriageTotal;// 实际总运量
 	
 	@Column(length = 50)
 	private String loadStation;// 装货地点
@@ -57,7 +57,7 @@ public class CarCost {
 	@Column(length = 50)
 	private String dealGoodsStation;// 交货地点
 	
-	private String backBillCode;// 回执单编�?
+	private String backBillCode;// 回执单编号
 	
 	private Date balanceTime;// 结算时间
 

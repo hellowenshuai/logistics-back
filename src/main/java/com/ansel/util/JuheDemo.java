@@ -3,9 +3,9 @@ package com.ansel.util;/**
  */
 
 /**
- * @author 860618058
+ * @author chenshuai
  * @version 1.0
- * @description TODO
+ * @description TODO 发送短信工具类
  * @date 2019/3/26 9:53
  **/
 

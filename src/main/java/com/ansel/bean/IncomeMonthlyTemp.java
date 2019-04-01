@@ -47,7 +47,7 @@ public class IncomeMonthlyTemp {
     private double bizFee;// 经营费用
 
 
-    private double carCarriage;// 车运�?
+    private double carCarriage;// 车运费
 
 
     private double conveyWage;// 搬运工资
@@ -56,16 +56,16 @@ public class IncomeMonthlyTemp {
     private double manageFee;// 管理费用
 
 
-    private double officeFee;// 办公�?
+    private double officeFee;// 办公费
 
 
-    private double houseRent;// 房租�?
+    private double houseRent;// 房租费
 
 
-    private double waterElecFee;// 水电�?
+    private double waterElecFee;// 水电费
 
 
-    private double phoneFee;// 电话�?
+    private double phoneFee;// 电话费
 
 
     private double other;// 其他

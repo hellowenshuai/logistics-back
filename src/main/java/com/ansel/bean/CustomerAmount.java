@@ -33,7 +33,7 @@ public class CustomerAmount {
 	
 	private double carriageTotal;// 运费总计
 	
-	private double insuranceTotal;// 保险费�?�计
+	private double insuranceTotal;// 保险费总计
 	
 	private int pieceAmountTotal;// 件数总计
 

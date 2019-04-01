@@ -16,7 +16,6 @@ import javax.mail.Transport;
 import javax.mail.internet.*;
 import java.io.File;
 import java.io.StringWriter;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 

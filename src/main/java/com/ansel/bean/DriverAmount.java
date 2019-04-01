@@ -30,9 +30,9 @@ public class DriverAmount {
 	@Column(length = 50)
 	private String driverCode;// 
 
-	private double carryFeeTotal;// 承运费�?�计
+	private double carryFeeTotal;// 承运费总计
 	
-	private double addCarriageTotal;// 加运费�?�计
+	private double addCarriageTotal;// 加运费总计
 	
 	private double total;// 总计
 

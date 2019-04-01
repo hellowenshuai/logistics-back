@@ -40,7 +40,7 @@ public class SentList {
 	private String goodsCode;// 货物编号
 	
 	@Column(length = 50)
-	private String transferDestination;// 中转目的�?
+	private String transferDestination;// 中转目的地
 	
 	@Column(length = 50)
 	private String sendGoodsCustomerTel;// 发货客户电话
@@ -52,7 +52,7 @@ public class SentList {
 	private double backCost;// 回结
 	
 	@Column(length = 50)
-	private String helpAcceptFund;// 代收�?
+	private String helpAcceptFund;// 代收款
 	
 	@Column(length = 50)
 	private String remark;// 备注
@@ -61,7 +61,7 @@ public class SentList {
 	private String driverName;// 司机名称
 	
 	@Column(length = 50)
-	private String carCardNo;// 车牌�?
+	private String carCardNo;// 车牌号
 	
 	@Column(length = 50)
 	private String mobile;// 手机
@@ -69,7 +69,7 @@ public class SentList {
 	private int pieceAmount;// 件数
 	
 	@Column(length = 50)
-	private String goodsRevertBillCode;// 货运回执单编�?
+	private String goodsRevertBillCode;// 货运回执单编号
 
 
 }

@@ -3,7 +3,7 @@ package com.ansel.util;
 import java.security.MessageDigest;
 
 /**
- * @author Administrator
+ * @author chenshuai
  * MD5 工具类
  */
 public class Enctype {

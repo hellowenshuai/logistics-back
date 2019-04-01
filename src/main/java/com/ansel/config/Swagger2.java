@@ -31,7 +31,7 @@ public class Swagger2 {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("国际物流管理系统 API 文档")
-                .contact(new Contact("Ansel Lee", "https://www.chenwenshai.top", ""))
+                .contact(new Contact("Chen Shuai", "https://www.chenwenshai.top", "15893630801@163.com"))
                 .version("1.0")
                 .description("API 描述")
                 .build();
