@@ -5,6 +5,7 @@ import com.ansel.bean.FunctionWithGroup;
 import com.ansel.bean.UserGroup;
 import com.ansel.dao.*;
 import com.ansel.service.IGroupService;
+import org.apache.commons.collections.ListUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,34 +177,39 @@ public class GroupServiceImpl implements IGroupService {
         log.info("新增权限list:" + newFunctionIds.toString());
         //旧的权限id集合
         List<FunctionWithGroup> functionWithGroups = functionWithGroupDao.findByGroupId(groupId);
+
         List<Integer> oldFunctionIds = new ArrayList<>();
         functionWithGroups.stream().forEach(functionWithGroup -> {
             oldFunctionIds.add(functionWithGroup.getFunctionId());
         });
         log.info("原来权限list:" + oldFunctionIds.toString());
-        //求出两个集合的交集
-        Set<Integer> functionSet = new HashSet<Integer>();
-        functionSet.addAll(oldFunctionIds);
-        functionSet.retainAll(newFunctionIds);
-        //set转为list
-        List<Integer> functionList = new ArrayList<>(functionSet);
-        //需要新增权限的差集
-        List<Integer> insertFunctionIds = new ArrayList<>();
-        for (int i = 0; i < newFunctionIds.size(); i++) {
-            if (!functionList.contains(newFunctionIds.get(i))) {
-                insertFunctionIds.add(newFunctionIds.get(i));
-            }
-        }
-        //需要删除权限的差集
-        List<Integer> removeFunctionIds = new ArrayList<>();
-        for (int i = 0; i < oldFunctionIds.size(); i++) {
-            if (!functionList.contains(oldFunctionIds.get(i))) {
-                removeFunctionIds.add(oldFunctionIds.get(i));
-            }
-        }
+
+//        //求出两个集合的交集
+//        Set<Integer> functionSet = new HashSet<Integer>();
+//        functionSet.addAll(oldFunctionIds);
+//        functionSet.retainAll(newFunctionIds);
+//        //set转为list
+//        List<Integer> functionList = new ArrayList<>(functionSet);
+//        //需要新增权限的差集
+//        List<Integer> insertFunctionIds = new ArrayList<>();
+//        for (int i = 0; i < newFunctionIds.size(); i++) {
+//            if (!functionList.contains(newFunctionIds.get(i))) {
+//                insertFunctionIds.add(newFunctionIds.get(i));
+//            }
+//        }
+//        //需要删除权限的差集
+//        List<Integer> removeFunctionIds = new ArrayList<>();
+//        for (int i = 0; i < oldFunctionIds.size(); i++) {
+//            if (!functionList.contains(oldFunctionIds.get(i))) {
+//                removeFunctionIds.add(oldFunctionIds.get(i));
+//            }
+//        }
+        List insertFunctionIds = ListUtils.removeAll(newFunctionIds, oldFunctionIds);
+        List removeFunctionIds = ListUtils.removeAll(oldFunctionIds, newFunctionIds);
+
         //移除某些权限
         for (int i = 0; i < removeFunctionIds.size(); i++) {
-            Integer functionId1 = removeFunctionIds.get(i).intValue();
+            Integer functionId1 = (Integer) removeFunctionIds.get(i);
             int count = functionWithGroupDao.deleteByFunctionIdAndAndGroupId(functionId1, groupId);
             if (count > 0) {
                 log.info("删除成功groupId：" + groupId + "functionId: " + functionId1);
@@ -213,7 +219,7 @@ public class GroupServiceImpl implements IGroupService {
         for (int i = 0; i < insertFunctionIds.size(); i++) {
             //为该用户添加新权限
             FunctionWithGroup functionWithGroup = new FunctionWithGroup();
-            functionWithGroup.setFunctionId(insertFunctionIds.get(i));
+            functionWithGroup.setFunctionId((Integer) insertFunctionIds.get(i));
             functionWithGroup.setGroupId(groupId);
             functionWithGroupDao.save(functionWithGroup);
         }
