@@ -8,19 +8,18 @@ import javax.persistence.Id;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serializable;
+
 /**
  * @author chenshuai
  * @version 1.0
  * @description 4.25 客户基本信息表
  * @date 2019/3/17 0017 16:09
  */
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+@Data
 @Entity(name = "customerinfo")
-public class CustomerInfo {
+public class CustomerInfo implements Serializable {
+
 	
 	@Id
 	@GeneratedValue(generator = "id")

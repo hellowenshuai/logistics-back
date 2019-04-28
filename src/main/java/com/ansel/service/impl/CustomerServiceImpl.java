@@ -14,9 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.connection.DataType;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author chenshuai
@@ -26,6 +31,14 @@ import java.util.List;
 public class CustomerServiceImpl implements ICustomerService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
+
+    private static final String CUSTOMER = "customer";
+
+    @Resource
+    private RedisTemplate<String, CustomerInfo> redisTemplate;
+
+    @Resource
+    private HashOperations<String, String, CustomerInfo> hashOperations;
 
     @Autowired
     private IGroupDao groupDao;
@@ -38,6 +51,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Autowired
     private ICustomerDao customerDao;
+
 
     /**
      * @return boolean
@@ -53,7 +67,7 @@ public class CustomerServiceImpl implements ICustomerService {
             String customerCode = "KH";
             while (true) {
                 customerCode += AddPeopleUtils.randomCode();
-                if (customerDao.findByCustomerCode(customerCode)==null) {
+                if (customerDao.findByCustomerCode(customerCode) == null) {
                     break;
                 }
             }
@@ -152,9 +166,45 @@ public class CustomerServiceImpl implements ICustomerService {
      * @creator chenshuai
      * @date 2019/3/20 0020
      */
+//    @Override
+//    public CustomerInfo selectByCustomerCode(String customerCode) {
+//        String key = CUSTOMER + customerCode;
+//        DataType type = redisTemplate.type(key);
+//        log.info("type:" + type);
+//        Boolean hasKey = redisTemplate.hasKey(key);
+//        CustomerInfo customerInfo;
+//        if (hasKey) {
+//            log.info("从redis取出缓存数据！");
+//            customerInfo = JSON.parseObject(redisTemplate.opsForValue().get(key), new TypeReference<CustomerInfo>() {
+//            });
+//            return customerInfo;
+//        } else {
+//            customerInfo = customerDao.findByCustomerCode(customerCode);
+//            log.info("将数据存入redis中！");
+//            String customerInfoString = JSONObject.toJSONString(customerInfo);
+//            redisTemplate.opsForValue().set(key, customerInfoString, 2, TimeUnit.HOURS);
+//        }
+//        return customerInfo;
+//    }
     @Override
     public CustomerInfo selectByCustomerCode(String customerCode) {
-        return customerDao.findByCustomerCode(customerCode);
+
+        String key = CUSTOMER + customerCode;
+        DataType type = redisTemplate.type(key);
+        log.info("type:" + type);
+        CustomerInfo customerInfo;
+        Boolean hasKey = hashOperations.hasKey(key,CustomerInfo.class);
+        if (hasKey) {
+            log.info("从redis取出缓存数据！");
+            customerInfo = hashOperations.get(key, CustomerInfo.class);
+            return customerInfo;
+        } else {
+            customerInfo = customerDao.findByCustomerCode(customerCode);
+            log.info("将数据存入redis中！");
+            hashOperations.put(CUSTOMER, key, customerInfo);
+            redisTemplate.expire(CUSTOMER, 1, TimeUnit.HOURS);
+        }
+        return customerInfo;
     }
 
     /**
